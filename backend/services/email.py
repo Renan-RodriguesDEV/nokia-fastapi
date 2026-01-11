@@ -1,10 +1,18 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from config.config import credentials
 
+
 class SenderMail:
-    def __init__(self, from_addr:str, host:str=credentials.get('host'), port:int=credentials.get('port'), password:str=credentials.get('port')):
+    def __init__(
+        self,
+        from_addr: str = credentials.get("username"),
+        host: str = credentials.get("host"),
+        port: int = credentials.get("port"),
+        password: str = credentials.get("password"),
+    ):
         self.from_addr = from_addr
         self.host = host
         self.port = port
@@ -44,12 +52,23 @@ class SenderMail:
             bool: True se enviou e False caso contrario.
         """
         try:
+            print("[DEBUG] Enviando email...")
+            print(
+                f"Dados:\
+                  {self.from_addr}\
+                  {self.password}\
+                  {self.port}|{type(self.port)}\
+                  {self.host}\
+                    "
+            )
             with smtplib.SMTP(self.host, self.port) as smtp:
                 smtp.ehlo()
                 smtp.starttls()
                 smtp.login(self.from_addr, self.password)
                 smtp.sendmail(self.from_addr, to_addr, message.as_string())
+                print("[DEBUG] Email envidado com sucesso")
         except Exception as e:
+            print("[ERROR] Falha ao enviar email")
             print(str(e))
             return False
         return True

@@ -11,11 +11,11 @@ from sqlalchemy.orm import Session
 
 
 def forgot_password(session: Session, username: str):
-    user = session.query(User).filter(User.username).first()
+    user = session.query(User).filter(User.username == username).first()
     if not user:
         raise exception_user_not_found
     token = create_reset_token(user, session)
-    sender_mail = SenderMail(username)
+    sender_mail = SenderMail()
     sender_mail.send(username, f"Seu reset token é {token}", "Recuperação de senha")
     return token
 
