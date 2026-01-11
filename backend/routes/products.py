@@ -23,7 +23,7 @@ router = APIRouter(prefix="/products", tags=["products"])
 @router.get(
     "/all", response_model=list[ProductPublicSchema], status_code=status.HTTP_200_OK
 )
-def get_all(
+async def get_all(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
@@ -33,7 +33,7 @@ def get_all(
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK)
-def get(
+async def get(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -49,7 +49,7 @@ def get(
 @router.post(
     "/create", response_model=ProductPublicSchema, status_code=status.HTTP_201_CREATED
 )
-def create(
+async def create(
     product: ProductCreateSchema,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -67,7 +67,7 @@ def create(
 @router.put(
     "/update/{id}", response_model=ProductPublicSchema, status_code=status.HTTP_200_OK
 )
-def update(
+async def update(
     id: int,
     product: ProductUpdateSchema,
     session: Session = Depends(get_session),
@@ -92,7 +92,7 @@ def update(
 @router.patch(
     "/update/{id}", response_model=ProductPublicSchema, status_code=status.HTTP_200_OK
 )
-def update_partial(
+async def update_partial(
     id: int,
     product: ProductUpdatePartialSchema,
     session: Session = Depends(get_session),
@@ -112,7 +112,7 @@ def update_partial(
 
 
 @router.delete("/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete(
+async def delete(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),

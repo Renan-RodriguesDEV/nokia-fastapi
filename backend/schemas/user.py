@@ -44,3 +44,7 @@ class UserUpdatePartialSchema(BaseModel):
 
 class UserForgotPasswordSchema(BaseModel):
     username: EmailStr
+class UserResetPasswordSchema(BaseModel):
+    username: EmailStr
+    password:str
+    token:str

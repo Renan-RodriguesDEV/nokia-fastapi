@@ -20,7 +20,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/me", response_model=UserSchema, status_code=status.HTTP_200_OK)
-def get(
+async def get(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
@@ -30,7 +30,7 @@ def get(
 
 
 @router.get("/all", response_model=list[UserSchema], status_code=status.HTTP_200_OK)
-def get_all(
+async def get_all(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
@@ -43,7 +43,7 @@ def get_all(
 @router.post(
     "/create", response_model=UserCreateSchema, status_code=status.HTTP_201_CREATED
 )
-def create(user: UserCreateSchema, session: Session = Depends(get_session)):
+async def create(user: UserCreateSchema, session: Session = Depends(get_session)):
     user.password = hashpasswd(user.password)
     user_db = User(**user.model_dump(exclude_unset=True))
     session.add(user_db)
@@ -52,7 +52,7 @@ def create(user: UserCreateSchema, session: Session = Depends(get_session)):
 
 
 @router.put("/update/{id}", response_model=UserSchema, status_code=status.HTTP_200_OK)
-def update(
+async def update(
     id: int,
     user: UserUpdateSchema,
     session: Session = Depends(get_session),
@@ -78,7 +78,7 @@ def update(
 
 
 @router.patch("/update/{id}", response_model=UserSchema, status_code=status.HTTP_200_OK)
-def update_partial(
+async def update_partial(
     id: int,
     user: UserUpdatePartialSchema,
     session: Session = Depends(get_session),
@@ -106,7 +106,7 @@ def update_partial(
 
 
 @router.delete("/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete(
+async def delete(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),

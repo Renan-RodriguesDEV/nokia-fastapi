@@ -20,7 +20,10 @@ def forgot_password(session: Session, username: str):
     return token
 
 
-def reset_password(user: User, password: str, reset_token: str, session: Session):
+def reset_password(username: str, password: str, reset_token: str, session: Session):
+    user = session.query(User).filter(User.username == username).first()
+    if not user:
+        raise exception_user_not_found
     if not user.token == reset_token:
         raise exception_invalid_token
     user.password = hashpasswd(password)

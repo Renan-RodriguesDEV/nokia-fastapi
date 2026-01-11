@@ -6,15 +6,15 @@ from db.entities import User
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.token import TokenSchema, UserLoginSchema
-from schemas.user import UserForgotPasswordSchema
-from services.token import forgot_password
+from schemas.user import UserForgotPasswordSchema, UserResetPasswordSchema
+from services.token import forgot_password, reset_password
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/login", response_model=TokenSchema)
-def login(
+async def login(
     user_schema: UserLoginSchema,
     session: Session = Depends(get_session),
 ):
@@ -41,7 +41,7 @@ def login(
 
 
 @router.post("/token", response_model=TokenSchema)
-def login_for_access_token(
+async def login_for_access_token(
     # OAuth2PasswordRequestForm é um Schema que permite se autenticar no swegger pelo form e adicionar o token nos headers da sessão
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: Session = Depends(get_session),
@@ -69,6 +69,14 @@ def login_for_access_token(
 
 
 @router.post("/forgot-password")
-def forgot(user: UserForgotPasswordSchema, session: Session = Depends(get_session)):
+async def forgot(
+    user: UserForgotPasswordSchema, session: Session = Depends(get_session)
+):
     token = forgot_password(session, user.username)
-    return {"status": status.HTTP_202_ACCEPTED, "reset_token": token}
+    return {"status": status.HTTP_200_OK, "reset_token": token}
+
+
+@router.put("/reset-password")
+async def reset(user: UserResetPasswordSchema, session: Session = Depends(get_session)):
+    password = reset_password(user.username, user.password, user.token, session)
+    return {"status": status.HTTP_200_OK, "password": password}

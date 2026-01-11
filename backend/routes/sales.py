@@ -24,7 +24,7 @@ router = APIRouter(prefix="/sales", tags=["sales"])
 @router.get(
     "/all", response_model=list[SalePublicSchema], status_code=status.HTTP_200_OK
 )
-def get_all(
+async def get_all(
     user_id: Optional[int] = None,
     product_id: Optional[int] = None,
     was_paid: Optional[bool] = None,
@@ -44,7 +44,7 @@ def get_all(
 
 
 @router.get("/{id}", response_model=SalePublicSchema, status_code=status.HTTP_200_OK)
-def get(
+async def get(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -60,7 +60,7 @@ def get(
 @router.post(
     "/create", response_model=SalePublicSchema, status_code=status.HTTP_201_CREATED
 )
-def create(
+async def create(
     sale: SaleCreateSchema,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -81,7 +81,7 @@ def create(
 @router.put(
     "/update/{id}", response_model=SalePublicSchema, status_code=status.HTTP_200_OK
 )
-def update(
+async def update(
     id: int,
     sale: SaleUpdateSchema,
     session: Session = Depends(get_session),
@@ -117,7 +117,7 @@ def update(
 @router.patch(
     "/update/{id}", response_model=SalePublicSchema, status_code=status.HTTP_200_OK
 )
-def update_partial(
+async def update_partial(
     id: int,
     sale: SaleUpdatePartialSchema,
     session: Session = Depends(get_session),
@@ -143,7 +143,7 @@ def update_partial(
 
 
 @router.delete("/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete(
+async def delete(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),

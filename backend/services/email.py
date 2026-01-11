@@ -53,14 +53,6 @@ class SenderMail:
         """
         try:
             print("[DEBUG] Enviando email...")
-            print(
-                f"Dados:\
-                  {self.from_addr}\
-                  {self.password}\
-                  {self.port}|{type(self.port)}\
-                  {self.host}\
-                    "
-            )
             with smtplib.SMTP(self.host, self.port) as smtp:
                 smtp.ehlo()
                 smtp.starttls()

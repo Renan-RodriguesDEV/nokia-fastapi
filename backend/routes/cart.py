@@ -21,7 +21,7 @@ router = APIRouter(prefix="/cart", tags=["cart"])
 @router.post(
     "/create", status_code=status.HTTP_201_CREATED, response_model=CartPublicSchema
 )
-def create(
+async def create(
     cart: CartCreateSchema,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -39,7 +39,7 @@ def create(
     "/delete/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
 )
-def delete(
+async def delete(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -60,7 +60,7 @@ def delete(
 @router.put(
     "/update/{id}", status_code=status.HTTP_200_OK, response_model=CartPublicSchema
 )
-def update(
+async def update(
     id: int,
     cart: CartUpdateSchema,
     session: Session = Depends(get_session),
@@ -84,7 +84,7 @@ def update(
     status_code=status.HTTP_200_OK,
     response_model=CartPublicSchema,
 )
-def update_partial(
+async def update_partial(
     id: int,
     cart: CartUpdatePartialSchema,
     session: Session = Depends(get_session),
