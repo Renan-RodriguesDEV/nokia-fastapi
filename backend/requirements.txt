@@ -1,0 +1,8 @@
+alembic==1.18.0
+fastapi[standard]==0.128.0
+pydantic==2.12.5
+PyJWT==2.10.1
+python-dotenv==1.2.1
+python_bcrypt==0.3.2
+SQLAlchemy==2.0.45
+uvicorn==0.40.0
