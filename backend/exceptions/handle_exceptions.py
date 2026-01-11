@@ -21,3 +21,6 @@ exception_sale_not_found = HTTPException(
 exception_missing_content = HTTPException(
     status.HTTP_422_UNPROCESSABLE_ENTITY, "Faltou conteudo para sua requisição"
 )
+exception_invalid_token = HTTPException(
+    status.HTTP_401_UNAUTHORIZED, "Seu token está invalido"
+)
