@@ -77,7 +77,7 @@ class Sale(Base):
     user = relationship("User", back_populates="sale")
     product = relationship("Product", back_populates="sale")
 
-    def __init__(self, user_id, product_id, count, value, was_paid=False):
+    def __init__(self, user_id, product_id, count, value=0.0, was_paid=False):
         self.user_id = user_id
         self.product_id = product_id
         self.count = count
@@ -92,17 +92,15 @@ class ShoppingCart(Base):
     user_id = Column(ForeignKey("usuarios.id", ondelete="CASCADE"), nullable=False)
     product_id = Column(ForeignKey("produtos.id", ondelete="CASCADE"), nullable=False)
     count = Column(Integer, nullable=False)
-    value = Column(Float, nullable=False)
     was_purchased = Column(Boolean, nullable=False, default=0)
     created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
     user = relationship("User", back_populates="shopping_cart")
     product = relationship("Product", back_populates="shopping_cart")
 
-    def __init__(self, user_id, product_id, count, value, was_purchased=False):
+    def __init__(self, user_id, product_id, count, was_purchased=False):
         self.user_id = user_id
         self.product_id = product_id
         self.count = count
-        self.value = value
         self.was_purchased = was_purchased
 
 

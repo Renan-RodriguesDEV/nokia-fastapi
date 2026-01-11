@@ -19,13 +19,11 @@ class SaleCreateSchema(BaseModel):
     user_id: int
     product_id: int
     count: int
-    value: float
     was_paid: bool = False
 
 
 class SaleUpdateSchema(BaseModel):
     count: int
-    value: float
     was_paid: bool = False
 
 

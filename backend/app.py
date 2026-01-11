@@ -2,6 +2,7 @@ import uvicorn
 from config.config import credentials
 from fastapi import FastAPI, status
 from routes.auth import router as auth_router
+from routes.cart import router as cart_router
 from routes.products import router as products_router
 from routes.sales import router as sales_router
 from routes.users import router as users_router
@@ -15,6 +16,7 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(products_router)
 app.include_router(sales_router)
+app.include_router(cart_router)
 
 
 @app.get("/health", status_code=status.HTTP_200_OK, tags=["health"])
