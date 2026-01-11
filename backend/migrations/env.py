@@ -1,11 +1,13 @@
-from logging.config import fileConfig
 import os
 import sys
+from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from db.base import Base
+from db.entities import Product, Sale, ShoppingCart, User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
