@@ -6,6 +6,8 @@ from db.entities import User
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from schemas.token import TokenSchema, UserLoginSchema
+from schemas.user import UserForgotPasswordSchema
+from services.token import forgot_password
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -64,3 +66,9 @@ def login_for_access_token(
         access_token=access_token, refresh_token=refresh_token, token_type="bearer"
     )
     return token
+
+
+@router.post("/forgot-password")
+def forgot(user: UserForgotPasswordSchema, session: Session = Depends(get_session)):
+    token = forgot_password(session, user.username)
+    return {"status": status.HTTP_202_ACCEPTED, "reset_token": token}

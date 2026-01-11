@@ -6,9 +6,8 @@ from exceptions.handle_exceptions import (
     exception_invalid_token,
     exception_user_not_found,
 )
+from services.email import SenderMail
 from sqlalchemy.orm import Session
-
-from backend.services.email import SenderMail
 
 
 def forgot_password(session: Session, username: str):

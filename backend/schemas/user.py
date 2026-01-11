@@ -40,3 +40,7 @@ class UserUpdatePartialSchema(BaseModel):
     password: Optional[str] = None
     telephone: Optional[str] = None
     token: Optional[str] = None
+
+
+class UserForgotPasswordSchema(BaseModel):
+    username: EmailStr
