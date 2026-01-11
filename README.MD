@@ -13,10 +13,12 @@ Espaço para experimentar um front-end mobile-first em Next.js integrado a um ba
 
 - **App FastAPI** exposto em `backend/app.py` com rota `GET /health` e rotas de negócio organizadas por módulos.
 - **Modelo de dados** completo em `backend/db/entities.py` (User, Product, Sale, Cart) com relacionamentos definidos via SQLAlchemy ORM.
-- **Autenticação OAuth2/JWT**: Sistema completo em `backend/auth/auth.py` com hash bcrypt, geração/validação de tokens e dependência `get_current_user` para proteção de rotas.
+- **Autenticação OAuth2/JWT**: Sistema completo em `backend/auth/auth.py` com hash bcrypt, geração/validação de tokens, refresh tokens (7 dias) e dependência `get_current_user` para proteção de rotas.
+- **Recuperação de senha**: Endpoints `/auth/forgot-password` e `/auth/reset-password` com geração de tokens temporários.
+- **Envio de emails**: Serviço SMTP integrado em `backend/services/email.py` com classe `SenderMail` robusta, tratamento de erros detalhado e suporte a HTML.
 - **Schemas Pydantic v2**: Todos os schemas configurados com `ConfigDict(from_attributes=True)` para conversão automática de objetos ORM, validação de entrada e serialização de resposta.
-- **API REST completa** com as seguintes rotas implementadas:
-  - **Auth** (`/auth`): Login via OAuth2, geração de tokens JWT
+- **API REST assíncrona completa** com as seguintes rotas implementadas:
+  - **Auth** (`/auth`): Login via OAuth2, geração de tokens JWT, recuperação de senha
   - **Users** (`/users`): CRUD completo com controle de acesso admin, endpoints `/all`, `/me`, `/create`, `/{id}`, PATCH e DELETE
   - **Products** (`/products`): Gestão de produtos com filtros por categoria, controle de estoque e imagens
   - **Sales** (`/sales`): Registro de vendas com filtros por usuário/produto, controle de pagamento, histórico completo
@@ -34,7 +36,7 @@ Espaço para experimentar um front-end mobile-first em Next.js integrado a um ba
    ```
 2. Instale as dependências principais (ajuste conforme necessário):
    ```bash
-   pip install fastapi uvicorn[standard] sqlalchemy python-dotenv bcrypt pyjwt python-multipart
+   pip install fastapi uvicorn[standard] sqlalchemy python-dotenv bcrypt pyjwt python-multipart alembic
    ```
 3. Configure um arquivo `.env` na pasta `backend/` com, por exemplo:
    ```ini
@@ -43,6 +45,10 @@ Espaço para experimentar um front-end mobile-first em Next.js integrado a um ba
    ALGORITHM=HS256
    SECRET_KEY=uma-chave-secreta-super-segura
    ACCESS_TOKEN_EXPIRE_TIME=4320
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USERNAME=seu-email@gmail.com
+   SMTP_PASSWORD=sua-senha-app
    ```
 4. Dentro de `backend/`, execute:
    ```bash
@@ -53,15 +59,18 @@ Espaço para experimentar um front-end mobile-first em Next.js integrado a um ba
 
 ### Próximos passos
 
-- Adicionar Alembic para migrações versionadas e scripts de seed do banco de dados.
-- Implementar refresh tokens e expiração avançada de sessões.
+- Completar implementação dos endpoints de reset de senha com validação de token.
+- Melhorias no serviço de email: templates HTML reutilizáveis, fila de emails assíncrona (Celery) e retry automático.
+- Implementar refresh tokens com rotação automática e revogação de sessões.
 - Adicionar validações de negócio mais robustas (verificação de estoque antes de venda, cálculo automático de totais).
-- Implementar upload e otimização de imagens de produtos.
+- Implementar upload e otimização de imagens de produtos (AWS S3 ou storage local).
 - Construir o frontend Next.js com foco em UX mobile, consumo via hooks (SWR/React Query) e tema consistente com a marca.
 - Adicionar documentação Swagger/OpenAPI detalhada para cada endpoint.
 - Implementar testes automatizados (unitários com pytest, integração e e2e).
 - Configurar CI/CD com GitHub Actions para deploy automático.
-- Adicionar logging estruturado e observabilidade (métricas, traces).
+- Adicionar logging estruturado e observabilidade (métricas, traces, Sentry).
+- Implementar rate limiting e proteção contra CSRF.
+- Configurar CORS apropriadamente para ambiente de produção.
 
 ### Créditos e referências
 
