@@ -1,5 +1,8 @@
+import os
+
 import uvicorn
 from config.config import credentials
+from dotenv import load_dotenv
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from routes.auth import router as auth_router
@@ -8,6 +11,7 @@ from routes.products import router as products_router
 from routes.sales import router as sales_router
 from routes.users import router as users_router
 
+load_dotenv()
 app = FastAPI(
     title="Back-end Padaria da Vila!",
     description="back-end para consumo em NextJS feito em FastAPI",
@@ -16,7 +20,7 @@ app = FastAPI(
 # configuração de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[os.getenv("FRONTEND_URL"), "http://localhost:3000"],
     allow_credentials=True,
     allow_headers=["*"],
     allow_methods=["*"],
