@@ -7,6 +7,7 @@ from exceptions.handle_exceptions import (
     exception_access_dained_for_user,
     exception_missing_content,
     exception_product_not_found,
+    exception_user_not_found,
 )
 from fastapi import APIRouter, Depends, File, UploadFile, status
 from schemas.product import (
@@ -27,8 +28,8 @@ async def get_all(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
-    if not current_user.is_admin:
-        raise exception_access_dained_for_user
+    if not current_user:
+        raise exception_user_not_found
     return session.query(Product).all()
 
 

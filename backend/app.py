@@ -1,6 +1,7 @@
 import uvicorn
 from config.config import credentials
 from fastapi import FastAPI, status
+from fastapi.middleware.cors import CORSMiddleware
 from routes.auth import router as auth_router
 from routes.cart import router as cart_router
 from routes.products import router as products_router
@@ -12,6 +13,16 @@ app = FastAPI(
     description="back-end para consumo em NextJS feito em FastAPI",
     version="0.0.1",
 )
+# configuração de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_headers=["*"],
+    allow_methods=["*"],
+)
+
+# incluindo rotas da aplicação
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(products_router)
