@@ -173,7 +173,9 @@ export default function Sidebar() {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed left-4 top-6 z-50 p-2 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-md hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-200"
+        className={`fixed top-20 z-50 p-2 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-md hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-200 ${
+          isOpen ? "left-64" : "left-20"
+        }`}
         title={isOpen ? "Recolher" : "Expandir"}
       >
         <svg
