@@ -157,16 +157,7 @@ export default function HomePage() {
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
             ℹ️ Informações da sua Conta
           </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-700 dark:to-slate-700 rounded-xl p-6 border border-amber-200 dark:border-slate-600">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                ID do Usuário
-              </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                #{user.id}
-              </p>
-            </div>
-
+          <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-700 dark:to-slate-700 rounded-xl p-6 border border-blue-200 dark:border-slate-600">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                 Email
@@ -240,41 +231,55 @@ export default function HomePage() {
         </div>
 
         {/* Restrictions Section */}
-        <div className="mt-16 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-8">
-          <h4 className="text-lg font-bold text-amber-900 dark:text-amber-200 mb-4">
-            📌 Restrições da sua Conta
+        <div className="mt-16 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-8">
+          <h4 className="text-lg font-bold text-blue-900 dark:text-blue-200 mb-4">
+            🎯 Dicas para Aproveitar
           </h4>
           {user.is_admin ? (
-            <ul className="space-y-2 text-amber-800 dark:text-amber-300">
+            <ul className="space-y-2 text-blue-800 dark:text-blue-300">
               <li className="flex items-center gap-2">
-                <span className="text-lg">❌</span>
+                <span className="text-lg">📦</span>
                 <span>
-                  <strong>Compras Desabilitadas:</strong> Como administrador,
-                  você não pode fazer compras no sistema.
+                  <strong>Gerenciar Produtos:</strong> Acesse a seção de
+                  produtos para criar, editar ou deletar itens do catálogo.
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-lg">✅</span>
+                <span className="text-lg">👥</span>
                 <span>
-                  <strong>Acesso Total:</strong> Você tem acesso a todas as
-                  funções de administração e gerenciamento.
+                  <strong>Gerenciar Usuários:</strong> Visualize e administre
+                  todos os usuários do sistema.
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-lg">💰</span>
+                <span>
+                  <strong>Acompanhar Vendas:</strong> Monitore todas as
+                  transações e vendas realizadas.
                 </span>
               </li>
             </ul>
           ) : (
-            <ul className="space-y-2 text-amber-800 dark:text-amber-300">
+            <ul className="space-y-2 text-blue-800 dark:text-blue-300">
               <li className="flex items-center gap-2">
-                <span className="text-lg">✅</span>
+                <span className="text-lg">🛍️</span>
                 <span>
-                  <strong>Compras Habilitadas:</strong> Você pode visualizar e
-                  comprar produtos do catálogo.
+                  <strong>Explorar Produtos:</strong> Veja todo o catálogo de
+                  produtos disponíveis para compra.
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-lg">❌</span>
+                <span className="text-lg">🛒</span>
                 <span>
-                  <strong>Gerenciamento Restrito:</strong> Você não tem acesso
-                  às funções de administração.
+                  <strong>Carrinho Inteligente:</strong> Adicione produtos ao
+                  carrinho e customize as quantidades conforme necessário.
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-lg">📋</span>
+                <span>
+                  <strong>Histórico de Compras:</strong> Acompanhe todas as suas
+                  compras anteriores e pedidos.
                 </span>
               </li>
             </ul>

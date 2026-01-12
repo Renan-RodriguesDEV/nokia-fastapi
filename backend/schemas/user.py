@@ -4,6 +4,14 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict, EmailStr
 
 
+class UserSimpleSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    name: str
+    username: EmailStr
+    password: str
+    telephone: Optional[str] = None
+
+
 class UserSchema(BaseModel):
     # model_config para permitir a criação do schema a partir de um ORM
     model_config = ConfigDict(from_attributes=True)
@@ -44,7 +52,9 @@ class UserUpdatePartialSchema(BaseModel):
 
 class UserForgotPasswordSchema(BaseModel):
     username: EmailStr
+
+
 class UserResetPasswordSchema(BaseModel):
     username: EmailStr
-    password:str
-    token:str
+    password: str
+    token: str

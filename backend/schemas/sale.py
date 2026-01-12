@@ -2,6 +2,8 @@ import datetime
 from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
+from schemas.product import ProductSimpleSchema
+from schemas.user import UserSimpleSchema
 
 
 class SalePublicSchema(BaseModel):
@@ -12,6 +14,8 @@ class SalePublicSchema(BaseModel):
     count: int
     value: float
     was_paid: bool
+    user: UserSimpleSchema
+    product: ProductSimpleSchema
     created_at: datetime.datetime
 
 

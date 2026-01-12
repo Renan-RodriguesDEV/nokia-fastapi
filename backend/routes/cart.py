@@ -1,3 +1,5 @@
+from typing import Optional
+
 from auth.auth import get_current_user
 from db.connection import get_session
 from db.entities import ShoppingCart, User
@@ -16,6 +18,23 @@ from schemas.cart import (
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/cart", tags=["cart"])
+
+
+@router.get("/", response_model=list[CartPublicSchema])
+def get_all(
+    user_id: Optional[int] = None,
+    product_id: Optional[int] = None,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.id != user_id and not current_user.is_admin:
+        raise exception_access_dained_for_user
+    cart = session.query(ShoppingCart)
+    if user_id:
+        cart.filter(ShoppingCart.user_id == user_id)
+    if product_id:
+        cart.filter(ShoppingCart.product_id == product_id)
+    return cart.all()
 
 
 @router.post(

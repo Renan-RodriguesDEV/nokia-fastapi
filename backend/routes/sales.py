@@ -31,7 +31,7 @@ async def get_all(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
-    if not current_user.is_admin:
+    if not current_user.is_admin and current_user.id != user_id:
         raise exception_access_dained_for_user
     sales = session.query(Sale)
     if user_id:

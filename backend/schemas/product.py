@@ -4,6 +4,15 @@ from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict
 
 
+class ProductSimpleSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    name: str
+    price: float
+    stock: int
+    category: str
+    validity: datetime.datetime
+
+
 class ProductPublicSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int

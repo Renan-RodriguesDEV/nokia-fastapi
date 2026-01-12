@@ -24,3 +24,6 @@ exception_missing_content = HTTPException(
 exception_invalid_token = HTTPException(
     status.HTTP_401_UNAUTHORIZED, "Seu token está invalido"
 )
+exception_image_not_found = HTTPException(
+    status.HTTP_404_NOT_FOUND, "Imagem não encontrado"
+)
