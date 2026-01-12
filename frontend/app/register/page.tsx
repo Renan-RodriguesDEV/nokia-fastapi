@@ -3,8 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { usersApi } from "@/lib/api/users";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -34,24 +33,17 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/users/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          username, // Email do usuário
-          password,
-          telephone: telephone || undefined,
-          is_admin: false, // Novos usuários são sempre clientes
-        }),
+      const response = await usersApi.createUser({
+        name,
+        username, // Email do usuário
+        password,
+        telephone: telephone || undefined,
+        is_admin: false, // Novos usuários são sempre clientes
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
+      if (response.error) {
         throw new Error(
-          errorData.detail || "Erro ao criar conta. Tente novamente."
+          response.detail || "Erro ao criar conta. Tente novamente."
         );
       }
 

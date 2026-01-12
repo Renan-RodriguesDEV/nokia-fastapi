@@ -69,11 +69,12 @@ export const usersApi = {
       username: string;
       password: string;
       telephone: string;
+      token:string|undefined;
     }>,
     token: string
   ) => {
     const response = await fetch(`${API_BASE_URL}/users/update/${userId}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Carregar preferência de tema ao montar
   useEffect(() => {
@@ -40,6 +40,12 @@ export default function Sidebar() {
   // Links para Cliente
   const clientLinks = [
     {
+      icon: "🏠",
+      label: "Pagina Inicial",
+      href: "/",
+      color: "hover:text-purple-500 dark:hover:text-purple-400",
+    },
+    {
       icon: "🛍️",
       label: "Meus Produtos",
       href: "/products",
@@ -61,6 +67,12 @@ export default function Sidebar() {
 
   // Links para Admin
   const adminLinks = [
+    {
+      icon: "🏠",
+      label: "Pagina Inicial",
+      href: "/",
+      color: "hover:text-purple-500 dark:hover:text-purple-400",
+    },
     {
       icon: "📦",
       label: "Gerenciar Produtos",
@@ -90,6 +102,8 @@ export default function Sidebar() {
         className={`fixed left-0 top-0 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-lg transition-all duration-300 z-30 ${
           isOpen ? "w-64" : "w-20"
         }`}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
       >
         <div className="flex flex-col h-full p-4">
           {/* Logo/Brand */}
@@ -157,6 +171,18 @@ export default function Sidebar() {
               </div>
             )}
 
+            {/* Profile Link */}
+            <Link
+              href="/about"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400"
+              title="Meu Perfil"
+            >
+              <span className="text-lg flex-shrink-0">👤</span>
+              {isOpen && (
+                <span className="text-sm font-medium">Meu Perfil</span>
+              )}
+            </Link>
+
             {/* Logout Button */}
             <button
               onClick={handleLogout}
@@ -169,29 +195,6 @@ export default function Sidebar() {
           </div>
         </div>
       </aside>
-
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed top-20 z-50 p-2 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-md hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-200 ${
-          isOpen ? "left-64" : "left-20"
-        }`}
-        title={isOpen ? "Recolher" : "Expandir"}
-      >
-        <svg
-          className="w-5 h-5 text-gray-700 dark:text-gray-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d={isOpen ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
-          />
-        </svg>
-      </button>
     </>
   );
 }

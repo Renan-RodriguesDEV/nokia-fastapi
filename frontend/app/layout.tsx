@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,9 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
@@ -56,8 +60,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-950 transition-colors`}
       >
         <ThemeProvider>
-          <Sidebar />
-          <main className="ml-20 transition-all duration-300">{children}</main>
+          {!isLoginPage && <Sidebar />}
+          <main
+            className={`transition-all duration-300 ${
+              !isLoginPage ? "ml-20" : ""
+            }`}
+          >
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

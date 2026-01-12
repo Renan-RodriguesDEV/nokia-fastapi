@@ -12,6 +12,7 @@ import { cartApi } from "@/lib/api/cart";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { Backbutton } from "@/app/components/Backbutton";
 
 export default function ProductsPage() {
   const { user, token, isAuthenticated, isLoading: authLoading } = useAuth();
@@ -354,12 +355,7 @@ export default function ProductsPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link
-              href="/"
-              className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 font-medium"
-            >
-              ← Voltar
-            </Link>
+            <Backbutton />
             {user.is_admin && (
               <button
                 onClick={openCreateModal}

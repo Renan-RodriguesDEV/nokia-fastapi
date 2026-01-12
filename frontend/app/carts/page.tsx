@@ -5,6 +5,7 @@ import { salesApi } from "@/lib/api/sales";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { Backbutton } from "@/app/components/Backbutton";
 
 interface CartItem {
   id: number;
@@ -126,12 +127,7 @@ export default function CartsPage() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {user?.is_admin ? "🛒 Carrinho de Clientes" : "🛒 Meu Carrinho"}
           </h1>
-          <button
-            onClick={() => router.back()}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-800 dark:text-white font-semibold rounded-lg transition"
-          >
-            ← Voltar
-          </button>
+          <Backbutton />
         </div>
       </header>
 
