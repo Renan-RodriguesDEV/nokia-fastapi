@@ -1,7 +1,14 @@
-FROM node
+FROM node:20-alpine
 
-COPY source dest
+WORKDIR /app
 
-RUN 
+COPY package*.json ./
+COPY . .
 
-CMD [ "executable" ]
+RUN npm i && npm run build
+
+EXPOSE 5000
+
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
+CMD [ "npm","run","dev" ]
