@@ -34,6 +34,15 @@ export default function SalesPage() {
   const [sales, setSales] = useState<Sale[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedSales, setSelectedSales] = useState<Set<number>>(new Set());
+  const [filterByUser, setFilterByUser] = useState<number | null>(null);
+  const [filterByPayment, setFilterByPayment] = useState<
+    "all" | "paid" | "pending"
+  >("all");
+  const [sortBy, setSortBy] = useState<
+    "date" | "status" | "client" | "pending"
+  >("date");
+  const [marking, setMarking] = useState(false);
 
   const loadSales = useCallback(async () => {
     if (!token) return;
@@ -72,6 +81,110 @@ export default function SalesPage() {
     }
   }, [isAuthenticated, isLoading, user, token, router, loadSales]);
 
+  const handleSelectSale = (saleId: number) => {
+    const newSelected = new Set(selectedSales);
+    if (newSelected.has(saleId)) {
+      newSelected.delete(saleId);
+    } else {
+      newSelected.add(saleId);
+    }
+    setSelectedSales(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedSales.size === sortedSales.length) {
+      setSelectedSales(new Set());
+    } else {
+      const allIds = new Set(sortedSales.map((s) => s.id));
+      setSelectedSales(allIds);
+    }
+  };
+
+  const filteredSales = filterByUser
+    ? sales.filter((s) => s.user_id === filterByUser)
+    : sales;
+
+  const paymentFilteredSales = filteredSales.filter((s) => {
+    if (filterByPayment === "paid") return s.was_paid;
+    if (filterByPayment === "pending") return !s.was_paid;
+    return true;
+  });
+
+  const sortedSales = [...paymentFilteredSales].sort((a, b) => {
+    if (sortBy === "date") {
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    }
+    if (sortBy === "status") {
+      if (a.was_paid === b.was_paid) {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      }
+      return a.was_paid ? 1 : -1;
+    }
+    if (sortBy === "pending") {
+      if (a.was_paid === b.was_paid) {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      }
+      return a.was_paid ? 1 : -1;
+    }
+    if (sortBy === "client") {
+      const nameA = a.user.name.toUpperCase();
+      const nameB = b.user.name.toUpperCase();
+      if (nameA !== nameB) {
+        return nameA.localeCompare(nameB);
+      }
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    }
+    return 0;
+  });
+
+  const handleMarkAsPaid = async (type: "single" | "user" | "all") => {
+    if (!token) return;
+
+    try {
+      setMarking(true);
+      setError(null);
+
+      if (type === "single" && selectedSales.size > 0) {
+        await salesApi.markMultipleSalesAsPaid(
+          Array.from(selectedSales),
+          token
+        );
+      } else if (type === "user" && filterByUser) {
+        const userSales = sales
+          .filter((s) => s.user_id === filterByUser && !s.was_paid)
+          .map((s) => s.id);
+        if (userSales.length > 0) {
+          await salesApi.markMultipleSalesAsPaid(userSales, token);
+        }
+      } else if (type === "all") {
+        const unpaidSales = sales.filter((s) => !s.was_paid).map((s) => s.id);
+        if (unpaidSales.length > 0) {
+          await salesApi.markMultipleSalesAsPaid(unpaidSales, token);
+        }
+      } else {
+        setError("Selecione vendas para marcar como paga");
+        return;
+      }
+
+      await loadSales();
+      setSelectedSales(new Set());
+      setFilterByUser(null);
+    } catch (err) {
+      console.error("Erro ao marcar como pago:", err);
+      setError("Erro ao marcar vendas como pagas. Tente novamente.");
+    } finally {
+      setMarking(false);
+    }
+  };
+
   if (isLoading || loadingData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -79,6 +192,10 @@ export default function SalesPage() {
       </div>
     );
   }
+
+  const uniqueUsers = Array.from(
+    new Map(sales.map((s) => [s.user_id, s.user])).values()
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
@@ -114,11 +231,205 @@ export default function SalesPage() {
           </div>
         ) : (
           <div className="grid gap-6">
+            {/* Controles de Admin */}
+            {user?.is_admin && (
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Filtrar por Cliente
+                    </label>
+                    <select
+                      value={filterByUser || ""}
+                      onChange={(e) =>
+                        setFilterByUser(
+                          e.target.value ? parseInt(e.target.value) : null
+                        )
+                      }
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="">Todos os clientes</option>
+                      {uniqueUsers.map((u) => (
+                        <option
+                          key={u.name}
+                          value={
+                            sales.find((s) => s.user.name === u.name)?.user_id
+                          }
+                        >
+                          {u.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Status de Pagamento
+                    </label>
+                    <select
+                      value={filterByPayment}
+                      onChange={(e) =>
+                        setFilterByPayment(
+                          e.target.value as "all" | "paid" | "pending"
+                        )
+                      }
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="all">Todas</option>
+                      <option value="paid">✓ Pagas</option>
+                      <option value="pending">⏳ Pendentes</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Ordenar por
+                    </label>
+                    <select
+                      value={sortBy}
+                      onChange={(e) =>
+                        setSortBy(
+                          e.target.value as
+                            | "date"
+                            | "status"
+                            | "client"
+                            | "pending"
+                        )
+                      }
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="date">📅 Data (Recente)</option>
+                      <option value="pending">⏳ Pendentes Primeiro</option>
+                      <option value="status">✓ Status</option>
+                      <option value="client">👤 Cliente</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleMarkAsPaid("all")}
+                    disabled={
+                      marking ||
+                      sortedSales.filter((s) => !s.was_paid).length === 0
+                    }
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
+                  >
+                    {marking ? "Processando..." : "✓ Marcar TODAS como Pago"}
+                  </button>
+
+                  {filterByUser && (
+                    <>
+                      <button
+                        onClick={() => handleMarkAsPaid("user")}
+                        disabled={
+                          marking ||
+                          !sortedSales.some(
+                            (s) => s.user_id === filterByUser && !s.was_paid
+                          )
+                        }
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
+                      >
+                        {marking
+                          ? "Processando..."
+                          : "✓ Marcar Cliente como Pago"}
+                      </button>
+                      <button
+                        onClick={() => setFilterByUser(null)}
+                        className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-medium transition"
+                      >
+                        Limpar Filtro
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Controles para Cliente */}
+            {!user?.is_admin && (
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Status de Pagamento
+                    </label>
+                    <select
+                      value={filterByPayment}
+                      onChange={(e) =>
+                        setFilterByPayment(
+                          e.target.value as "all" | "paid" | "pending"
+                        )
+                      }
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="all">Todas</option>
+                      <option value="paid">✓ Pagas</option>
+                      <option value="pending">⏳ Pendentes</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Ordenar por
+                    </label>
+                    <select
+                      value={sortBy}
+                      onChange={(e) =>
+                        setSortBy(
+                          e.target.value as
+                            | "date"
+                            | "status"
+                            | "client"
+                            | "pending"
+                        )
+                      }
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                    >
+                      <option value="date">📅 Data (Recente)</option>
+                      <option value="pending">⏳ Pendentes Primeiro</option>
+                      <option value="status">✓ Status</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Mensagem informativa para cliente */}
+            {!user?.is_admin && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl shadow-lg p-6 border border-blue-200 dark:border-blue-700">
+                <div className="flex gap-4">
+                  <div className="text-4xl">ℹ️</div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">
+                      Como funciona o pagamento
+                    </h3>
+                    <p className="text-blue-800 dark:text-blue-300">
+                      Após você retirar o produto e efetuar o pagamento, um
+                      administrador marcará seu pedido como pago no sistema.
+                      Você poderá acompanhar o status aqui em "⏳ Pendentes" ou
+                      "✓ Pagas".
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-slate-700">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
                     <tr>
+                      {user?.is_admin && (
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                          <input
+                            type="checkbox"
+                            checked={
+                              selectedSales.size === sortedSales.length &&
+                              sortedSales.length > 0
+                            }
+                            onChange={handleSelectAll}
+                            className="w-5 h-5 rounded border-gray-300 cursor-pointer"
+                          />
+                        </th>
+                      )}
                       <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                         #ID
                       </th>
@@ -142,14 +453,30 @@ export default function SalesPage() {
                       <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                         Data
                       </th>
+                      {user?.is_admin && (
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                          Ação
+                        </th>
+                      )}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
-                    {sales.map((sale) => (
+                    {sortedSales.map((sale) => (
                       <tr
                         key={sale.id}
                         className="hover:bg-gray-50 dark:hover:bg-slate-700 transition"
                       >
+                        {user?.is_admin && (
+                          <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
+                            <input
+                              type="checkbox"
+                              checked={selectedSales.has(sale.id)}
+                              onChange={() => handleSelectSale(sale.id)}
+                              disabled={sale.was_paid}
+                              className="w-5 h-5 rounded border-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            />
+                          </td>
+                        )}
                         <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
                           #{sale.id}
                         </td>
@@ -183,6 +510,22 @@ export default function SalesPage() {
                             "pt-BR"
                           )}
                         </td>
+                        {user?.is_admin && (
+                          <td className="px-6 py-4 text-sm">
+                            {!sale.was_paid && (
+                              <button
+                                onClick={() => {
+                                  setSelectedSales(new Set([sale.id]));
+                                  handleMarkAsPaid("single");
+                                }}
+                                disabled={marking}
+                                className="px-3 py-1 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white rounded text-xs font-medium transition"
+                              >
+                                {marking ? "..." : "Pagar"}
+                              </button>
+                            )}
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -190,14 +533,38 @@ export default function SalesPage() {
               </div>
             </div>
 
+            {/* Botão de ação para múltiplas seleções */}
+            {user?.is_admin && selectedSales.size > 0 && (
+              <div className="fixed bottom-8 right-8 bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 border border-gray-200 dark:border-slate-700">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  {selectedSales.size} venda(s) selecionada(s)
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleMarkAsPaid("single")}
+                    disabled={marking}
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
+                  >
+                    {marking ? "Processando..." : "✓ Marcar como Pago"}
+                  </button>
+                  <button
+                    onClick={() => setSelectedSales(new Set())}
+                    className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-medium transition"
+                  >
+                    Limpar
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Resumo */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                   Total de Transações
                 </p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {sales.length}
+                  {sortedSales.length}
                 </p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
@@ -205,7 +572,8 @@ export default function SalesPage() {
                   Valor Total
                 </p>
                 <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                  R$ {sales.reduce((sum, s) => sum + s.value, 0).toFixed(2)}
+                  R${" "}
+                  {sortedSales.reduce((sum, s) => sum + s.value, 0).toFixed(2)}
                 </p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
@@ -213,7 +581,16 @@ export default function SalesPage() {
                   Pagos
                 </p>
                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                  {sales.filter((s) => s.was_paid).length}/{sales.length}
+                  {sortedSales.filter((s) => s.was_paid).length}/
+                  {sortedSales.length}
+                </p>
+              </div>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  Pendentes
+                </p>
+                <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+                  {sortedSales.filter((s) => !s.was_paid).length}
                 </p>
               </div>
             </div>

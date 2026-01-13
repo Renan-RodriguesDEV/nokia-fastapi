@@ -91,4 +91,47 @@ export const salesApi = {
     });
     return response.json();
   },
+
+  /**
+   * Marcar uma venda como paga
+   * @param id - ID da venda
+   * @param token - JWT access token
+   * @returns Dados da venda atualizada
+   */
+  markSaleAsPaid: async (id: number, token: string) => {
+    const response = await fetch(`${API_BASE_URL}/sales/update/${id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ was_paid: true }),
+    });
+    return response.json();
+  },
+
+  /**
+   * Marcar múltiplas vendas como pagas
+   * @param saleIds - Array de IDs das vendas
+   * @param token - JWT access token
+   * @returns Array com resultados de cada atualização
+   */
+  markMultipleSalesAsPaid: async (
+    saleIds: number[],
+    token: string
+  ) => {
+    const results = await Promise.all(
+      saleIds.map((id) =>
+        fetch(`${API_BASE_URL}/sales/update/${id}`, {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ was_paid: true }),
+        }).then((res) => res.json())
+      )
+    );
+    return results;
+  },
 };
