@@ -66,8 +66,14 @@ def get_current_user(
 
 
 def hashpasswd(password: str):
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(12)).decode("utf-8")
+    if isinstance(password, str):
+        password = password.encode("utf-8")
+    return bcrypt.hashpw(password, bcrypt.gensalt(12)).decode("utf-8")
 
 
 def checkpasswd(password: str, password_hashed: str):
-    return bcrypt.checkpw(password.encode("utf-8"), password_hashed.encode("utf-8"))
+    if isinstance(password, str):
+        password = password.encode("utf-8")
+    if isinstance(password_hashed, str):
+        password_hashed = password_hashed.encode("utf-8")
+    return bcrypt.checkpw(password, password_hashed)
