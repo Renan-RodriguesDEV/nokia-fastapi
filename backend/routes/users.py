@@ -14,6 +14,7 @@ from schemas.user import (
     UserUpdatePartialSchema,
     UserUpdateSchema,
 )
+from services.websocket_manager import manager
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -24,6 +25,8 @@ async def get(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
+    # await manager.connect()
+    await manager.broadcast("Seja bem-vindo de volta, " + current_user.username + "!")
     if not current_user:
         raise exception_user_not_found
     return current_user

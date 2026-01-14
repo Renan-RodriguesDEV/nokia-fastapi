@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
+import { Header } from "@/components/Header";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -60,14 +62,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-950 transition-colors`}
       >
         <ThemeProvider>
-          {!isLoginPage && <Sidebar />}
-          <main
-            className={`transition-all duration-300 ${
-              !isLoginPage ? "ml-20" : ""
-            }`}
-          >
-            {children}
-          </main>
+          <NotificationProvider>
+            {!isLoginPage && <Header />}
+            {!isLoginPage && <Sidebar />}
+            <main
+              className={`transition-all duration-300 ${
+                !isLoginPage ? "ml-20" : ""
+              }`}
+            >
+              {children}
+            </main>
+          </NotificationProvider>
         </ThemeProvider>
       </body>
     </html>

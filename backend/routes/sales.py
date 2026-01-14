@@ -16,6 +16,7 @@ from schemas.sale import (
     SaleUpdateSchema,
 )
 from services.sales import calculate_stock, calculate_value
+from services.websocket_manager import manager
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/sales", tags=["sales"])
@@ -67,14 +68,22 @@ async def create(
 ):
     if not current_user.is_admin and sale.user_id != current_user.id:
         raise exception_access_dained_for_user
-
+    # await manager.connect()
     product = session.query(Product).filter(Product.id == sale.product_id).first()
     sale_db = Sale(**sale.model_dump())
     sale_db.value = calculate_value(sale.count, product.price)
     product.stock = calculate_stock(sale.count, product.stock)
+    if product.stock <= 1:
+        await manager.broadcast(
+            f"Alerta! O produto {product.name} está com estoque baixo: {product.stock} unidades restantes."
+        )
     session.add(sale_db)
     session.commit()
     session.refresh(sale_db)
+
+    await manager.broadcast(
+        f"Nova venda criada! Produto: {product.name}, Quantidade: {sale.count}, Valor: R$ {sale_db.value:.2f}"
+    )
     return sale_db
 
 
@@ -88,6 +97,7 @@ async def update(
     current_user: User = Depends(get_current_user),
 ):
     sale_data = sale.model_dump()
+    # await manager.connect()
     sale_db = session.query(Sale).filter(Sale.id == id).first()
     if not sale_db:
         raise exception_sale_not_found
@@ -102,7 +112,10 @@ async def update(
     # estoque = 100 − 2 = 98
     diff = sale.count - sale_db.count
     product.stock = calculate_stock(diff, product.stock)
-
+    if product.stock <= 1:
+        await manager.broadcast(
+            f"Alerta! O produto {product.name} está com estoque baixo: {product.stock} unidades restantes."
+        )
     if not current_user.is_admin and sale_db.user_id != current_user.id:
         raise exception_access_dained_for_user
     for key, value in sale_data.items():
@@ -124,6 +137,7 @@ async def update_partial(
     current_user: User = Depends(get_current_user),
 ):
     sale_data = sale.model_dump(exclude_unset=True)
+    # await manager.connect()
     sale_db = session.query(Sale).filter(Sale.id == id).first()
     if not sale_db:
         raise exception_sale_not_found
@@ -136,6 +150,10 @@ async def update_partial(
             )
             diff = sale.count - sale_db.count
             product.stock = calculate_stock(diff, product.stock)
+            if product.stock <= 1:
+                await manager.broadcast(
+                    f"Alerta! O produto {product.name} está com estoque baixo: {product.stock} unidades restantes."
+                )
         setattr(sale_db, key, value)
     session.commit()
     session.refresh(sale_db)
