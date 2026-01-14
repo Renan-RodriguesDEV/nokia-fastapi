@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,19 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Esconder sidebar na página de register
+  useEffect(() => {
+    const sidebar = document.querySelector("aside");
+    if (sidebar) {
+      sidebar.style.display = "none";
+    }
+    return () => {
+      if (sidebar) {
+        sidebar.style.display = "";
+      }
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
