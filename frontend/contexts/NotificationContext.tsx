@@ -33,13 +33,42 @@ export function NotificationProvider({
 }) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
+  const fetchProductMissingStock = async () => {
+    const urlAPI = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    // Função para buscar produtos com estoque baixo
+    // Pode ser implementada uma chamada à API aqui
+    console.log("[WebSocket] Verificando produtos com estoque baixo...");
+    const response = await fetch(`${urlAPI}/ws/check/stock`);
+    if (response.ok) {
+      console.log("[WebSocket] Verificação de estoque concluída.");
+      return await response.json();
+    } else {
+      console.error("[WebSocket] Falha ao verificar estoque.");
+      throw new Error("Falha ao verificar estoque");
+    }
+  };
+  const fetchProductValidityIsNext = async () => {
+    const urlAPI = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    // Função para buscar produtos com validade próxima/vencida
+    // Pode ser implementada uma chamada à API aqui
+    console.log(
+      "[WebSocket] Verificando produtos com validade próxima/vencida..."
+    );
+    const response = await fetch(`${urlAPI}/ws/check/validity`);
+    if (response.ok) {
+      console.log("[WebSocket] Verificação de validade concluída.");
+      return await response.json();
+    } else {
+      console.error("[WebSocket] Falha ao verificar validade.");
+      throw new Error("Falha ao verificar validade");
+    }
+  };
   // Conecta ao WebSocket apenas uma vez, no mount do provider
   useEffect(() => {
     const urlAPI =
       process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") ||
       "ws://localhost:8000";
     const wsUrl = `${urlAPI}/ws/stock`;
-
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
@@ -82,6 +111,29 @@ export function NotificationProvider({
         websocket.close();
       }
     };
+  }, []);
+
+  // Verifica estoque e validade a cada 24h
+  useEffect(() => {
+    const checkProductStatus = async () => {
+      try {
+        await fetchProductMissingStock();
+        await fetchProductValidityIsNext();
+      } catch (error) {
+        console.error(
+          "[WebSocket] Erro ao verificar status dos produtos:",
+          error
+        );
+      }
+    };
+
+    // Executa na primeira vez imediatamente
+    checkProductStatus();
+
+    // Depois executa a cada 24h
+    const intervalId = setInterval(checkProductStatus, 3600000 * 24);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const markAsRead = useCallback((id: string) => {

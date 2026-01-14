@@ -8,29 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const router = useRouter();
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  // Carregar preferência de tema ao montar
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setIsDarkMode(isDark);
-  }, []);
-
-  const toggleDarkMode = () => {
-    const html = document.documentElement;
-    const newIsDark = !isDarkMode;
-
-    if (newIsDark) {
-      html.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      html.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-
-    setIsDarkMode(newIsDark);
-  };
 
   const handleLogout = () => {
     logout();
@@ -142,20 +120,6 @@ export default function Sidebar() {
 
           {/* User Info & Actions */}
           <div className="space-y-3 border-t border-gray-200 dark:border-slate-700 pt-4">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300"
-              title="Alternar tema"
-            >
-              <span className="text-lg">{isDarkMode ? "☀️" : "🌙"}</span>
-              {isOpen && (
-                <span className="text-sm font-medium">
-                  {isDarkMode ? "Claro" : "Escuro"}
-                </span>
-              )}
-            </button>
-
             {/* User Profile */}
             {isOpen && user && (
               <div className="bg-gray-50 dark:bg-slate-800 rounded-lg p-3">

@@ -21,10 +21,10 @@ async def websocket_notify(websocket: WebSocket):
 
 
 @router.get("/check/stock", response_model=list[ProductPublicSchema])
-def check_stock(session: Session = Depends(get_session)):
+async def check_stock(session: Session = Depends(get_session)):
     products = session.query(Product).filter(Product.stock < 10).all()
     [
-        manager.broadcast(
+        await manager.broadcast(
             f"Produto {p.name} está com estoque abaixo de 10! total em estoque é de {p.stock}"
         )
         for p in products
@@ -33,11 +33,11 @@ def check_stock(session: Session = Depends(get_session)):
 
 
 @router.get("/check/validity", response_model=list[ProductPublicSchema])
-def check_validity(session: Session = Depends(get_session)):
+async def check_validity(session: Session = Depends(get_session)):
     current_date = datetime.datetime.now()
     products = session.query(Product).filter(Product.validity > current_date).all()
     [
-        manager.broadcast(
+        await manager.broadcast(
             f"Produto {p.name} está com prazo de validade vencido! a data de vencimento era {p.validity}"
         )
         for p in products
