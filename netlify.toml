@@ -2,7 +2,9 @@
   base = "frontend"
   command = "npm run build"
   publish = ".next"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- backend/"
+
+[build.environment]
+  NETLIFY_SKIP_PYTHON = "true"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
