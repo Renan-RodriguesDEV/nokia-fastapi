@@ -7,8 +7,146 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile first - estilos base para mobile */
+main {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  display: block;
+}
+
+/* Responsividade de imagens */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Ajustes para inputs e formulários em mobile */
+input,
+textarea,
+select,
+button {
+  font-size: 16px; /* Evita zoom automático em iOS */
+  padding: 0.75rem;
+  max-width: 100%;
+}
+
+/* Container responsivo */
+.max-w-7xl {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Garante que cards e containers não atravessem */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Força flex items a respeitar tamanhos */
+.flex {
+  min-width: 0;
+}
+
+.flex-col {
+  min-width: 0;
+}
+
+/* Mobile - telas até 640px */
+@media (max-width: 639px) {
+  body {
+    font-size: 14px;
+  }
+
+  main {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .max-w-7xl {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Força texto a truncar em mobile */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Cards e containers responsivos */
+  .rounded-2xl {
+    border-radius: 1rem;
+  }
+
+  /* Botões menores em mobile */
+  button {
+    font-size: 14px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Inputs menores em mobile */
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Mantém 16px para evitar zoom */
+    padding: 0.5rem;
+  }
+
+  /* Grid responsivo */
+  .grid {
+    gap: 0.75rem;
+  }
+}
+
+/* Tablets e acima (640px+) */
+@media (min-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+
+  main {
+    min-height: calc(100vh - 80px);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .max-w-7xl {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

@@ -98,13 +98,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="w-full mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-12 lg:py-16 max-w-7xl">
         {/* Welcome Section */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Bem-vindo, {user.username}! 👋
+        <div className="mb-6 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2 break-words">
+            Bem-vindo, <span className="break-all">{user.username}</span>! 👋
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400">
             {user.is_admin
               ? "Você está logado como administrador. Aqui você pode gerenciar todos os aspectos do sistema."
               : "Você está logado como cliente. Aqui você pode visualizar produtos e gerenciar suas compras."}
@@ -112,11 +112,11 @@ export default function HomePage() {
         </div>
 
         {/* Role-Based Info Section */}
-        <div className="mb-12 bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 border border-gray-200 dark:border-slate-700">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="mb-6 sm:mb-12 bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-gray-200 dark:border-slate-700">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             ℹ️ Informações da sua Conta
           </h3>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-700 dark:to-slate-700 rounded-xl p-6 border border-blue-200 dark:border-slate-600">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                 Email
@@ -139,37 +139,37 @@ export default function HomePage() {
 
         {/* Features Grid */}
         <div>
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-8">
             {user.is_admin
               ? "⚙️ Funções Administrativas"
               : "🎯 Funcionalidades"}
           </h3>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {features.map((feature) => (
               <Link key={feature.href} href={feature.href}>
-                <div className="h-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-200 dark:border-slate-700 overflow-hidden cursor-pointer group">
+                <div className="h-full bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 sm:transform sm:hover:scale-105 border border-gray-200 dark:border-slate-700 overflow-hidden cursor-pointer group">
                   {/* Icon Background */}
                   <div
-                    className={`bg-gradient-to-br ${feature.color} h-24 flex items-center justify-center text-5xl group-hover:scale-110 transition-transform duration-300`}
+                    className={`bg-gradient-to-br ${feature.color} h-20 sm:h-24 flex items-center justify-center text-4xl sm:text-5xl group-hover:scale-110 transition-transform duration-300`}
                   >
                     {feature.icon}
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-500 group-hover:bg-clip-text transition-all">
+                  <div className="p-4 sm:p-6">
+                    <h4 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-500 group-hover:bg-clip-text transition-all break-words">
                       {feature.title}
                     </h4>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">
                       {feature.description}
                     </p>
 
                     {/* Arrow */}
-                    <div className="flex items-center text-amber-500 font-semibold group-hover:translate-x-2 transition-transform">
+                    <div className="flex items-center text-amber-500 font-semibold text-sm group-hover:translate-x-2 transition-transform">
                       Acessar
                       <svg
-                        className="w-5 h-5 ml-2"
+                        className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

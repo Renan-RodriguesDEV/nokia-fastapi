@@ -342,28 +342,29 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Header */}
       <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl">
-                <span className="text-lg">🍞</span>
+        <div className="w-full mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex-shrink-0">
+                <span className="text-base sm:text-lg">🍞</span>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white truncate">
                 Produtos
               </h1>
             </Link>
-          </div>
 
-          <div className="flex items-center gap-4">
-            <Backbutton />
-            {user.is_admin && (
-              <button
-                onClick={openCreateModal}
-                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-lg transition duration-200"
-              >
-                + Novo Produto
-              </button>
-            )}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Backbutton />
+              {user.is_admin && (
+                <button
+                  onClick={openCreateModal}
+                  className="px-2 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-lg transition text-sm whitespace-nowrap"
+                >
+                  <span className="hidden sm:inline">+ Novo Produto</span>
+                  <span className="sm:hidden">+</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -547,8 +548,8 @@ export default function ProductsPage() {
 
       {/* Modal de Criar/Editar Produto */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-lg my-4 max-h-[95vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200 dark:border-slate-700">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {editingProduct ? "Editar Produto" : "Novo Produto"}
@@ -714,8 +715,8 @@ export default function ProductsPage() {
 
       {/* Modal de Detalhes */}
       {showDetailsModal && selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-lg my-4 max-h-[95vh] overflow-y-auto">
             <div className="relative h-64 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-700 dark:to-slate-600 rounded-t-2xl flex items-center justify-center">
               {productImages[selectedProduct.id] ? (
                 <img
@@ -811,8 +812,8 @@ export default function ProductsPage() {
 
       {/* Modal de Confirmação de Exclusão */}
       {showDeleteModal && productToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-md p-4 sm:p-6 mx-2">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🗑️</span>

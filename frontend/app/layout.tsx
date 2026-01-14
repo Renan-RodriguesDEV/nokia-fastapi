@@ -28,7 +28,12 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR" className="dark" suppressHydrationWarning>
-      <head />
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 transition-colors`}
       >
@@ -36,9 +41,9 @@ export default function RootLayout({
           {!isLoginPage && <Header />}
           {!isLoginPage && <Sidebar />}
           <main
-            className={`transition-all duration-300 ${
-              !isLoginPage ? "ml-20" : ""
-            }`}
+            className={`min-h-screen transition-all duration-300 ${
+              !isLoginPage ? "sm:ml-20" : ""
+            } pt-2 sm:pt-4 px-4 sm:px-6`}
           >
             {children}
           </main>

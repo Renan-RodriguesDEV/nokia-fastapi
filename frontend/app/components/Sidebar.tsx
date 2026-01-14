@@ -75,9 +75,9 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Sidebar */}
+      {/* Sidebar - Hidden on mobile, visible on desktop */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-lg transition-all duration-300 z-30 ${
+        className={`hidden sm:block sm:fixed left-0 top-0 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-lg transition-all duration-300 z-30 ${
           isOpen ? "w-64" : "w-20"
         }`}
         onMouseEnter={() => setIsOpen(true)}

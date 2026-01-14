@@ -413,123 +413,128 @@ export default function SalesPage() {
             )}
 
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-slate-700">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
-                    <tr>
-                      {user?.is_admin && (
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                          <input
-                            type="checkbox"
-                            checked={
-                              selectedSales.size === sortedSales.length &&
-                              sortedSales.length > 0
-                            }
-                            onChange={handleSelectAll}
-                            className="w-5 h-5 rounded border-gray-300 cursor-pointer"
-                          />
-                        </th>
-                      )}
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        #ID
-                      </th>
-                      {user?.is_admin && (
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                          Usuário
-                        </th>
-                      )}
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        Produto
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        Qtde
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        Valor Total
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        Status
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                        Data
-                      </th>
-                      {user?.is_admin && (
-                        <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                          Ação
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
-                    {sortedSales.map((sale) => (
-                      <tr
-                        key={sale.id}
-                        className="hover:bg-gray-50 dark:hover:bg-slate-700 transition"
-                      >
-                        {user?.is_admin && (
-                          <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                            <input
-                              type="checkbox"
-                              checked={selectedSales.has(sale.id)}
-                              onChange={() => handleSelectSale(sale.id)}
-                              disabled={sale.was_paid}
-                              className="w-5 h-5 rounded border-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                            />
-                          </td>
-                        )}
-                        <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                          #{sale.id}
-                        </td>
-                        {user?.is_admin && (
-                          <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                            Usuário - {sale.user.name}
-                          </td>
-                        )}
-                        <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                          Produto - {sale.product.name}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                          {sale.count}x
-                        </td>
-                        <td className="px-6 py-4 text-sm font-semibold text-green-600 dark:text-green-400">
-                          R$ {sale.value.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 text-sm">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              sale.was_paid
-                                ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
-                                : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300"
-                            }`}
-                          >
-                            {sale.was_paid ? "✓ Pago" : "⏳ Pendente"}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(sale.created_at).toLocaleDateString(
-                            "pt-BR"
+              <div className="overflow-x-auto -mx-4 sm:mx-0">
+                <div className="inline-block min-w-full align-middle">
+                  <div className="overflow-hidden">
+                    <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+                      <thead className="bg-gray-50 dark:bg-slate-900">
+                        <tr>
+                          {user?.is_admin && (
+                            <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                              <input
+                                type="checkbox"
+                                checked={
+                                  selectedSales.size === sortedSales.length &&
+                                  sortedSales.length > 0
+                                }
+                                onChange={handleSelectAll}
+                                className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 cursor-pointer"
+                              />
+                            </th>
                           )}
-                        </td>
-                        {user?.is_admin && (
-                          <td className="px-6 py-4 text-sm">
-                            {!sale.was_paid && (
-                              <button
-                                onClick={() => {
-                                  setSelectedSales(new Set([sale.id]));
-                                  handleMarkAsPaid("single");
-                                }}
-                                disabled={marking}
-                                className="px-3 py-1 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white rounded text-xs font-medium transition"
-                              >
-                                {marking ? "..." : "Pagar"}
-                              </button>
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            #ID
+                          </th>
+                          {user?.is_admin && (
+                            <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                              Usuário
+                            </th>
+                          )}
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            Produto
+                          </th>
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            Qtde
+                          </th>
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            Valor
+                          </th>
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            Status
+                          </th>
+                          <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                            Data
+                          </th>
+                          {user?.is_admin && (
+                            <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                              Ação
+                            </th>
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
+                        {sortedSales.map((sale) => (
+                          <tr
+                            key={sale.id}
+                            className="hover:bg-gray-50 dark:hover:bg-slate-700 transition"
+                          >
+                            {user?.is_admin && (
+                              <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 dark:text-gray-300 whitespace-nowrap">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedSales.has(sale.id)}
+                                  onChange={() => handleSelectSale(sale.id)}
+                                  disabled={sale.was_paid}
+                                  className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                />
+                              </td>
                             )}
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 dark:text-gray-300 whitespace-nowrap">
+                              #{sale.id}
+                            </td>
+                            {user?.is_admin && (
+                              <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 dark:text-gray-300 max-w-[120px] truncate">
+                                {sale.user.name}
+                              </td>
+                            )}
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 dark:text-gray-300 max-w-[150px] truncate">
+                              {sale.product.name}
+                            </td>
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 dark:text-gray-300 whitespace-nowrap">
+                              {sale.count}x
+                            </td>
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-green-600 dark:text-green-400 whitespace-nowrap">
+                              R$ {sale.value.toFixed(2)}
+                            </td>
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
+                              <span
+                                className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold whitespace-nowrap ${
+                                  sale.was_paid
+                                    ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+                                    : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300"
+                                }`}
+                              >
+                                {sale.was_paid ? "✓" : "⏳"}
+                              </span>
+                            </td>
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                              {new Date(sale.created_at).toLocaleDateString(
+                                "pt-BR",
+                                { day: "2-digit", month: "2-digit" }
+                              )}
+                            </td>
+                            {user?.is_admin && (
+                              <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
+                                {!sale.was_paid && (
+                                  <button
+                                    onClick={() => {
+                                      setSelectedSales(new Set([sale.id]));
+                                      handleMarkAsPaid("single");
+                                    }}
+                                    disabled={marking}
+                                    className="px-2 sm:px-3 py-1 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white rounded text-[10px] sm:text-xs font-medium transition"
+                                  >
+                                    {marking ? "..." : "Pagar"}
+                                  </button>
+                                )}
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
 
