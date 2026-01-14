@@ -31,7 +31,6 @@ const fetchCurrentUser = async (accessToken: string) => {
       'Content-Type': 'application/json',
     },
   });
-
   if (response.ok) {
     return await response.json();
   } else {

@@ -1,5 +1,5 @@
 from db.base import Base
-from db.connection import ConnectionDB
+from db.connection import get_engine
 from sqlalchemy import (
     TIMESTAMP,
     Boolean,
@@ -104,4 +104,4 @@ class ShoppingCart(Base):
         self.was_purchased = was_purchased
 
 
-Base.metadata.create_all(ConnectionDB().engine)
+Base.metadata.create_all(get_engine())

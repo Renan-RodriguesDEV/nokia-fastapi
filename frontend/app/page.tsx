@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function HomePage() {
-  const { user, isAuthenticated, isLoading, logout } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
   // 🔍 DEBUG: Monitorar estado na página home
@@ -21,7 +21,7 @@ export default function HomePage() {
       );
       router.push("/login");
     }
-  }, [isAuthenticated, isLoading, router]);
+  });
 
   // 🔍 DEBUG: Verificar quando está no loading
   if (isLoading) {

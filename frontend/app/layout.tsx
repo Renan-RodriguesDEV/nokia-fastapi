@@ -20,10 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
@@ -37,7 +34,6 @@ function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  if (!mounted) return null;
   return <>{children}</>;
 }
 

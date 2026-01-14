@@ -35,7 +35,10 @@ export function NotificationProvider({
 
   // Conecta ao WebSocket apenas uma vez, no mount do provider
   useEffect(() => {
-    const wsUrl = `ws://localhost:8000/ws/stock`;
+    const urlAPI =
+      process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") ||
+      "ws://localhost:8000";
+    const wsUrl = `${urlAPI}/ws/stock`;
 
     const websocket = new WebSocket(wsUrl);
 
