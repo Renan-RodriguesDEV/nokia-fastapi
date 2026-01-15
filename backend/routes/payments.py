@@ -8,6 +8,7 @@ from exceptions.handle_exceptions import (
     exception_sale_not_found,
 )
 from fastapi import APIRouter, Depends, Request, status
+from logger import logger
 from schemas.payment import PaymentSchema
 from services.payment_manager import PaymentManager
 from sqlalchemy.orm import Session
@@ -49,34 +50,42 @@ def create(
     }
 
 
-@router.get("/check/{payment_id}", status_code=status.HTTP_200_OK)
-def check(payment_id: str, session: Session = Depends(get_session)):
-    # sale = session.query(Sale).filter(Sale.payment_id==payment_id).first()
-    # if not sale:
-    #     raise exception_sale_not_found
-    payment_status = payment_manager.check(payment_id)
-    return {
-        "status": status.HTTP_200_OK,
-        "data": {
-            # "sale":sale,
-            "payment_status": payment_status
-        },
-    }
+# @router.get("/check/{payment_id}", status_code=status.HTTP_200_OK)
+# def check(payment_id: str, session: Session = Depends(get_session)):
+#     # sale = session.query(Sale).filter(Sale.payment_id==payment_id).first()
+#     # if not sale:
+#     #     raise exception_sale_not_found
+#     payment_status = payment_manager.check(payment_id)
+#     return {
+#         "status": status.HTTP_200_OK,
+#         "data": {
+#             # "sale":sale,
+#             "payment_status": payment_status
+#         },
+#     }
 
 
 @router.get("/success", status_code=status.HTTP_200_OK)
-def success(request:Request):
-    print(f"Pagamento aprovado {request.query_params}")
+def success(request: Request, session: Session = Depends(get_session)):
+    logger.info(f"Pagamento aprovado {request.query_params}")
+    preference_id = request.query_params.get("preference_id")
+    if not preference_id:
+        raise exception_not_payment
+    sale = session.query(Sale).filter(Sale.payment_id == preference_id).first()
+    if not sale:
+        raise exception_sale_not_found
+    sale.was_paid = True
+    session.commit()
     return {"status": status.HTTP_200_OK, "message": "success"}
 
 
 @router.get("/failure", status_code=status.HTTP_200_OK)
-def failure(request:Request):
-    print(f"Pagamento falhou {request.query_params}")
+def failure(request: Request):
+    logger.error(f"Pagamento falhou {request.query_params}")
     return {"status": status.HTTP_200_OK, "message": "failure"}
 
 
 @router.get("/pending", status_code=status.HTTP_200_OK)
-def pending(request:Request):
-    print(f"Pagamento pendente {request.query_params}")
+def pending(request: Request):
+    logger.warning(f"Pagamento pendente {request.query_params}")
     return {"status": status.HTTP_200_OK, "message": "pending"}

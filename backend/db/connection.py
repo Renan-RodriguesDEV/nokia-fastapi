@@ -1,4 +1,5 @@
 from config.config import credentials
+from logger import logger
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -13,7 +14,7 @@ def get_session():
     try:
         yield session
     except Exception as e:
-        print(f"Error getting DB session: {e}")
+        logger.error(f"Error getting DB session: {e}")
         session.rollback()
         raise
     finally:

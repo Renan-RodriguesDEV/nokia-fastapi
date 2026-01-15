@@ -3,6 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from config.config import credentials
+from logger import logger
 
 
 class SenderMail:
@@ -52,15 +53,15 @@ class SenderMail:
             bool: True se enviou e False caso contrario.
         """
         try:
-            print("[DEBUG] Enviando email...")
+            logger.info("[DEBUG] Enviando email...")
             with smtplib.SMTP(self.host, self.port) as smtp:
                 smtp.ehlo()
                 smtp.starttls()
                 smtp.login(self.from_addr, self.password)
                 smtp.sendmail(self.from_addr, to_addr, message.as_string())
-                print("[DEBUG] Email envidado com sucesso")
+                logger.info("[DEBUG] Email envidado com sucesso")
         except Exception as e:
-            print("[ERROR] Falha ao enviar email")
-            print(str(e))
+            logger.error("[ERROR] Falha ao enviar email")
+            logger.error(str(e))
             return False
         return True

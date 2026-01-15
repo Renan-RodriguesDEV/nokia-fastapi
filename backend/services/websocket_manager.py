@@ -1,4 +1,5 @@
 from fastapi import WebSocket
+from logger import logger
 
 
 class WebSocketManager:
@@ -8,20 +9,20 @@ class WebSocketManager:
     async def connect(self, ws: WebSocket):
         await ws.accept()
         self.connections.append(ws)
-        print("Usuário conectado")
+        logger.debug("Usuário conectado")
         return True
 
     def disconnect(self, ws: WebSocket):
         self.connections.remove(ws)
-        print("Usuário desconectado")
+        logger.debug("Usuário desconectado")
         return True
 
     async def send_text(self, ws: WebSocket, message: str):
         await ws.send_text(message)
-        print(f"Enviando mensagem para 1 usuario, mensagem: {message}")
+        logger.debug(f"Enviando mensagem para 1 usuario, mensagem: {message}")
 
     async def broadcast(self, message: str):
-        print(
+        logger.debug(
             f"Enviando mensagem para {len(self.connections)} usuarios, mensagem: {message}"
         )
         for ws in self.connections:
