@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from mercadopago import SDK
+from exceptions.handle_exceptions import exception_payment_error
 
 load_dotenv()
 
@@ -37,7 +38,7 @@ class PaymentManager:
         try:
             preference_response: dict = self.sdk.preference().create(preference_data)
         except Exception as e:
-            raise Exception(f"Erro ao criar preferência de pagamento: {e}")
+            raise exception_payment_error(e)
         return preference_response.get("response")
 
     def check(self, payment_id: str):

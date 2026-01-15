@@ -27,3 +27,13 @@ exception_invalid_token = HTTPException(
 exception_image_not_found = HTTPException(
     status.HTTP_404_NOT_FOUND, "Imagem não encontrado"
 )
+exception_not_payment = HTTPException(
+    status_code=status.HTTP_204_NO_CONTENT,
+    detail="Não houve resposta no metodo de criação de pagamento",
+)
+exception_runnable = lambda e: HTTPException(
+    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+)
+exception_payment_error = lambda e: Exception(
+    f"Erro ao criar preferência de pagamento: {e}"
+)

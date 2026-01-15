@@ -5,6 +5,7 @@ from config.config import credentials
 from dotenv import load_dotenv
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from routes.auth import router as auth_router
 from routes.cart import router as cart_router
 from routes.payments import router as payments_router
@@ -39,6 +40,16 @@ app.include_router(sales_router)
 app.include_router(cart_router)
 app.include_router(websocket_router)
 app.include_router(payments_router)
+
+
+@app.get("/", status_code=status.HTTP_200_OK, tags=["health"])
+def get():
+    return HTMLResponse("""
+    <p> Bem vindo a API da padaria da vila 
+    <button onclick="window.location.href='/docs'">Swegger</button>
+    <button onclick="window.location.href='/redoc'">Documentação</button>
+    <p/>
+    """)
 
 
 @app.get("/health", status_code=status.HTTP_200_OK, tags=["health"])
