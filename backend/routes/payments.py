@@ -50,21 +50,6 @@ def create(
     }
 
 
-# @router.get("/check/{payment_id}", status_code=status.HTTP_200_OK)
-# def check(payment_id: str, session: Session = Depends(get_session)):
-#     # sale = session.query(Sale).filter(Sale.payment_id==payment_id).first()
-#     # if not sale:
-#     #     raise exception_sale_not_found
-#     payment_status = payment_manager.check(payment_id)
-#     return {
-#         "status": status.HTTP_200_OK,
-#         "data": {
-#             # "sale":sale,
-#             "payment_status": payment_status
-#         },
-#     }
-
-
 @router.get("/success", status_code=status.HTTP_200_OK)
 def success(request: Request, session: Session = Depends(get_session)):
     logger.info(f"Pagamento aprovado {request.query_params}")

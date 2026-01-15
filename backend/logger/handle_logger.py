@@ -1,9 +1,10 @@
 import logging
+import sys
 
 
 def setup_logger(name: str = "app", level: int = logging.DEBUG):
     logger = logging.getLogger(name)
-    console_handler = logging.StreamHandler()
+    console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(
         logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     )
