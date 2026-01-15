@@ -13,6 +13,7 @@ class SalePublicSchema(BaseModel):
     product_id: int
     count: int
     value: float
+    payment_id:str
     was_paid: bool
     user: UserSimpleSchema
     product: ProductSimpleSchema
@@ -28,10 +29,12 @@ class SaleCreateSchema(BaseModel):
 
 class SaleUpdateSchema(BaseModel):
     count: int
+    payment_id:str
     was_paid: bool = False
 
 
 class SaleUpdatePartialSchema(BaseModel):
     count: Optional[int] = None
     value: Optional[float] = None
+    payment_id: Optional[str] = None
     was_paid: Optional[bool] = None

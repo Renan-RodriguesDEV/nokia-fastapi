@@ -1,14 +1,22 @@
-from exceptions.handle_exceptions import exception_not_payment, exception_runnable
-from fastapi import APIRouter, status
+from db.connection import get_session
+from exceptions.handle_exceptions import (
+    exception_not_payment,
+    exception_runnable,
+    exception_sale_not_found,
+)
+from fastapi import APIRouter, Depends, status
 from schemas.payment import PaymentSchema
 from services.payment_manager import PaymentManager
+from sqlalchemy.orm import Session
+
+from db.entities import Sale
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 payment_manager = PaymentManager()
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
-def create(payment: PaymentSchema):
+@router.post("/{id}", status_code=status.HTTP_201_CREATED)
+def create(id: int, payment: PaymentSchema, session: Session = Depends(get_session)):
     try:
         payment_response = payment_manager.create_preference(
             payment.title,
@@ -19,6 +27,11 @@ def create(payment: PaymentSchema):
         raise exception_runnable(e)
     if not payment_response:
         raise exception_not_payment
+    sale = session.get(Sale, id)
+    if not sale:
+        raise exception_sale_not_found
+    sale.payment_id = payment_response.get("id")
+    session.commit()
     return {
         "status": status.HTTP_201_CREATED,
         "data": {

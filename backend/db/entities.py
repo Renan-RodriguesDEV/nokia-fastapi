@@ -72,16 +72,20 @@ class Sale(Base):
     product_id = Column(ForeignKey("produtos.id", ondelete="CASCADE"), nullable=False)
     count = Column(Integer, nullable=False)
     value = Column(Float, nullable=False)
+    payment_id = Column(String, nullable=True)
     was_paid = Column(Boolean, nullable=False, default=0)
     created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
     user = relationship("User", back_populates="sale")
     product = relationship("Product", back_populates="sale")
 
-    def __init__(self, user_id, product_id, count, value=0.0, was_paid=False):
+    def __init__(
+        self, user_id, product_id, count, value=0.0, payment_id=None, was_paid=False
+    ):
         self.user_id = user_id
         self.product_id = product_id
         self.count = count
         self.value = value
+        self.payment_id = payment_id
         self.was_paid = was_paid
 
 
