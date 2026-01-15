@@ -1,3 +1,5 @@
+import os
+
 from auth.auth import get_current_user
 from db.connection import get_session
 from db.entities import Sale, User
@@ -8,6 +10,7 @@ from exceptions.handle_exceptions import (
     exception_sale_not_found,
 )
 from fastapi import APIRouter, Depends, Request, status
+from fastapi.responses import RedirectResponse
 from logger import logger
 from schemas.payment import PaymentSchema
 from services.payment_manager import PaymentManager
@@ -61,16 +64,25 @@ def success(request: Request, session: Session = Depends(get_session)):
         raise exception_sale_not_found
     sale.was_paid = True
     session.commit()
-    return {"status": status.HTTP_200_OK, "message": "success"}
+    return RedirectResponse(
+        url=f"{os.getenv('FRONTEND_URL')}/sales",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    )
 
 
 @router.get("/failure", status_code=status.HTTP_200_OK)
 def failure(request: Request):
     logger.error(f"Pagamento falhou {request.query_params}")
-    return {"status": status.HTTP_200_OK, "message": "failure"}
+    return RedirectResponse(
+        url=f"{os.getenv('FRONTEND_URL')}/sales",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    )
 
 
 @router.get("/pending", status_code=status.HTTP_200_OK)
 def pending(request: Request):
     logger.warning(f"Pagamento pendente {request.query_params}")
-    return {"status": status.HTTP_200_OK, "message": "pending"}
+    return RedirectResponse(
+        url=f"{os.getenv('FRONTEND_URL')}/sales",
+        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    )
