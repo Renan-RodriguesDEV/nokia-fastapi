@@ -149,6 +149,7 @@ async def update_partial(
                 session.query(Product).filter(Product.id == sale_db.product_id).first()
             )
             diff = sale.count - sale_db.count
+            sale.value = calculate_value(value, product.price)
             product.stock = calculate_stock(diff, product.stock)
             if product.stock <= 1:
                 await manager.broadcast(

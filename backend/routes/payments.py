@@ -1,4 +1,5 @@
 from db.connection import get_session
+from db.entities import Sale
 from exceptions.handle_exceptions import (
     exception_not_payment,
     exception_runnable,
@@ -8,8 +9,6 @@ from fastapi import APIRouter, Depends, status
 from schemas.payment import PaymentSchema
 from services.payment_manager import PaymentManager
 from sqlalchemy.orm import Session
-
-from db.entities import Sale
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 payment_manager = PaymentManager()
@@ -27,7 +26,7 @@ def create(id: int, payment: PaymentSchema, session: Session = Depends(get_sessi
         raise exception_runnable(e)
     if not payment_response:
         raise exception_not_payment
-    sale = session.get(Sale, id)
+    sale = session.query(Sale).filter(Sale.id == id).first()
     if not sale:
         raise exception_sale_not_found
     sale.payment_id = payment_response.get("id")
