@@ -43,6 +43,54 @@ export default function SalesPage() {
     "date" | "status" | "client" | "pending"
   >("date");
   const [marking, setMarking] = useState(false);
+  const [paymentLinks, setPaymentLinks] = useState<Record<number, string>>({});
+  const [loadingPayment, setLoadingPayment] = useState<Set<number>>(new Set());
+
+  const handleGeneratePaymentLink = async (saleId: number) => {
+    if (!token) return;
+
+    try {
+      setLoadingPayment((prev) => new Set(prev).add(saleId));
+      setError(null);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/payments/${saleId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: "Pagamento de Venda",
+            quantity: 1,
+            unit_price: sortedSales.find((s) => s.id === saleId)?.value || 0,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao gerar link de pagamento");
+      }
+
+      const data = await response.json();
+      const initPoint = data.data.payment.init_point;
+
+      setPaymentLinks((prev) => ({
+        ...prev,
+        [saleId]: initPoint,
+      }));
+    } catch (err) {
+      console.error("Erro ao gerar link de pagamento:", err);
+      setError("Erro ao gerar link de pagamento. Tente novamente.");
+    } finally {
+      setLoadingPayment((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(saleId);
+        return newSet;
+      });
+    }
+  };
 
   const loadSales = useCallback(async () => {
     if (!token) return;
@@ -402,8 +450,15 @@ export default function SalesPage() {
                       Como funciona o pagamento
                     </h3>
                     <p className="text-blue-800 dark:text-blue-300">
-                      Após você retirar o produto e efetuar o pagamento, um
-                      administrador marcará seu pedido como pago no sistema.
+                      1. Clique em <strong>"Gerar Link"</strong> para criar um
+                      link de pagamento único
+                      <br />
+                      2. Clique em <strong>"Ir ao Checkout"</strong> para abrir
+                      a tela de pagamento no Mercado Pago
+                      <br />
+                      3. Após o pagamento aprovado, sua compra será marcada como
+                      paga automaticamente
+                      <br />
                       Você poderá acompanhar o status aqui em "⏳ Pendentes" ou
                       "✓ Pagas".
                     </p>
@@ -458,6 +513,11 @@ export default function SalesPage() {
                           {user?.is_admin && (
                             <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
                               Ação
+                            </th>
+                          )}
+                          {!user?.is_admin && (
+                            <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                              Pagamento
                             </th>
                           )}
                         </tr>
@@ -526,6 +586,40 @@ export default function SalesPage() {
                                   >
                                     {marking ? "..." : "Pagar"}
                                   </button>
+                                )}
+                              </td>
+                            )}
+                            {!user?.is_admin && (
+                              <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
+                                {!sale.was_paid ? (
+                                  <div className="flex flex-col gap-2">
+                                    {!paymentLinks[sale.id] ? (
+                                      <button
+                                        onClick={() =>
+                                          handleGeneratePaymentLink(sale.id)
+                                        }
+                                        disabled={loadingPayment.has(sale.id)}
+                                        className="px-2 sm:px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded text-[10px] sm:text-xs font-medium transition whitespace-nowrap"
+                                      >
+                                        {loadingPayment.has(sale.id)
+                                          ? "Gerando..."
+                                          : "Gerar Link"}
+                                      </button>
+                                    ) : (
+                                      <a
+                                        href={paymentLinks[sale.id]}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg text-xs sm:text-sm font-semibold transition shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
+                                      >
+                                        💳 Ir ao Checkout
+                                      </a>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-[10px] sm:text-xs font-semibold">
+                                    ✓ Pago
+                                  </span>
                                 )}
                               </td>
                             )}

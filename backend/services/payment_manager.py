@@ -28,9 +28,9 @@ class PaymentManager:
                 }
             ],
             "back_urls": {
-                "success": f"{url}/success",
-                "failure": f"{url}/failure",
-                "pending": f"{url}/pendings",
+                "success": f"{url}/payments/success",
+                "failure": f"{url}/payments/failure",
+                "pending": f"{url}/payments/pendings",
             },
             "auto_return": "approved",
         }
