@@ -1,15 +1,13 @@
 from exceptions.handle_exceptions import exception_not_payment, exception_runnable
 from fastapi import APIRouter, status
-from schemas.payment import PaymentResponseSchema, PaymentSchema
+from schemas.payment import PaymentSchema
 from services.payment_manager import PaymentManager
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 payment_manager = PaymentManager()
 
 
-@router.post(
-    "/", response_model=PaymentResponseSchema, status_code=status.HTTP_201_CREATED
-)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create(payment: PaymentSchema):
     try:
         payment_response = payment_manager.create_preference(
