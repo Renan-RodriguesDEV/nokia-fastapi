@@ -14,8 +14,10 @@ router = APIRouter(prefix="/payments", tags=["payments"])
 payment_manager = PaymentManager()
 
 
-@router.post("/{id}", status_code=status.HTTP_201_CREATED)
-def create(id: int, payment: PaymentSchema, session: Session = Depends(get_session)):
+@router.post("/{sale_id}", status_code=status.HTTP_201_CREATED)
+def create(
+    sale_id: int, payment: PaymentSchema, session: Session = Depends(get_session)
+):
     try:
         payment_response = payment_manager.create_preference(
             payment.title,
@@ -26,7 +28,7 @@ def create(id: int, payment: PaymentSchema, session: Session = Depends(get_sessi
         raise exception_runnable(e)
     if not payment_response:
         raise exception_not_payment
-    sale = session.query(Sale).filter(Sale.id == id).first()
+    sale = session.query(Sale).filter(Sale.id == sale_id).first()
     if not sale:
         raise exception_sale_not_found
     sale.payment_id = payment_response.get("id")
@@ -36,6 +38,21 @@ def create(id: int, payment: PaymentSchema, session: Session = Depends(get_sessi
         "data": {
             "info": payment.model_dump(),
             "payment": payment_response,
+        },
+    }
+
+
+@router.get("/check/{payment_id}", status_code=status.HTTP_200_OK)
+def check(payment_id: str, session: Session = Depends(get_session)):
+    # sale = session.query(Sale).filter(Sale.payment_id==payment_id).first()
+    # if not sale:
+    #     raise exception_sale_not_found
+    payment_status = payment_manager.check(payment_id)
+    return {
+        "status": status.HTTP_200_OK,
+        "data": {
+            # "sale":sale,
+            "payment_status": payment_status
         },
     }
 

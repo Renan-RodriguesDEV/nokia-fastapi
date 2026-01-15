@@ -3,12 +3,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
+
+RUN npm ci && npm run build
+
 COPY . .
 
-RUN npm i && npm run build
-
-EXPOSE 5000
+EXPOSE 3000
 
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
-CMD [ "npm","run","dev" ]
+CMD [ "npm","start" ]

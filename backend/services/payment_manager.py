@@ -1,8 +1,8 @@
 import os
 
 from dotenv import load_dotenv
-from mercadopago import SDK
 from exceptions.handle_exceptions import exception_payment_error
+from mercadopago import SDK
 
 load_dotenv()
 
