@@ -30,7 +30,9 @@ class User(Base):
         "ShoppingCart", back_populates="user", cascade="all, delete-orphan"
     )
 
-    def __init__(self, name, username, password, telephone, token=None, is_admin=False):
+    def __init__(
+        self, name, username, password, telephone=None, token=None, is_admin=False
+    ):
         self.name = name
         self.username = username
         self.password = password
