@@ -1,11 +1,31 @@
-version: '1.0'
+# especificando a versão do schema docker-compose
+version: '3.9'
+
+# serviços definidos no docker-compose
 services:
+
+  # criando o serviço de backend
   backend:
+    # falando onde está o Dockerfile do backend
     build: ./backend
+    # falando/mapeando a porta do backend (host:container) container é 8000 fora dele usa essa ai tbm
+    ports:
+      - "8000:8000"
+    # dizendo onde está o arquivo de variáveis de ambiente do backend para o container utilizar elas sem precisar colocar no Dockerfile (não copia pro container, apenas seta as variáveis de ambiente lá dentro)
     env_file:
-      - ./backend/.env
+      - ./backend/.env.local
+    environment:
+      - FRONTEND_URL=http://frontend:3000 # URL interna (rede do compose)
+      - BACKEND_URL=http://backend:8000 # URL interna (rede do compose)
     
   frontend:
     build: ./frontend
+    ports:
+      - "3000:3000"
     env_file:
       - ./frontend/.env.local
+    environment:
+      # Se o seu frontend faz fetch no browser, ele precisa apontar para o HOST
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend # garantindo que o backend inicie antes do frontend
