@@ -57,7 +57,9 @@ class SenderMail:
             with smtplib.SMTP(self.host, self.port) as smtp:
                 smtp.ehlo()
                 smtp.starttls()
+                logger.debug("[DEBUG] Conectado ao servidor SMTP")
                 smtp.login(self.from_addr, self.password)
+                logger.debug("[DEBUG] Login realizado com sucesso")
                 smtp.sendmail(self.from_addr, to_addr, message.as_string())
                 logger.info("[DEBUG] Email envidado com sucesso")
         except Exception as e:
