@@ -35,7 +35,8 @@ async def check_stock(session: Session = Depends(get_session)):
 @router.get("/check/validity", response_model=list[ProductPublicSchema])
 async def check_validity(session: Session = Depends(get_session)):
     current_date = datetime.datetime.now()
-    products = session.query(Product).filter(Product.validity > current_date).all()
+    # Pega os produtos com validade menor ou igual que a data atual
+    products = session.query(Product).filter(Product.validity <= current_date).all()
     [
         await manager.broadcast(
             f"Produto {p.name} está com prazo de validade vencido! a data de vencimento era {p.validity}"
