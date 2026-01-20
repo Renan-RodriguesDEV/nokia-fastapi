@@ -13,10 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # copiando os arquivos do projeto para o contêiner
 COPY . .
 
-# Documenta em que porta a aplicação irá rodar
+# isso informa ao Docker que a aplicação usa a porta 8000
 EXPOSE 8000
 
-# variáveis de ambiente
+# variáveis de ambiente (isso é setado qndo o contêiner é iniciado)
 ENV DEBUG=FALSE
 
 # comando para rodar a aplicação

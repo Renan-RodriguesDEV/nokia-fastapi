@@ -25,7 +25,8 @@ services:
     env_file:
       - ./frontend/.env.local
     environment:
-      # Se o seu frontend faz fetch no browser, ele precisa apontar para o HOST
+      # URLs no Docker: use "backend:8000" entre containers, "localhost:8000" no navegador
+      # O navegador está fora do Docker, então precisa do host da máquina, não do nome do serviço
       - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
       - backend # garantindo que o backend inicie antes do frontend

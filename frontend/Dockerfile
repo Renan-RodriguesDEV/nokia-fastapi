@@ -27,9 +27,12 @@ ENV NODE_ENV=production
 
 # Copia apenas o necessário do estágio builder
 COPY --from=builder /app/package*.json ./
-RUN npm ci --omit=dev
+# Instala também devDependencies (typescript) porque o Next lê next.config.ts no start
+RUN npm ci --include=dev
 
+# Copia os arquivos buildados do Next.js
 COPY --from=builder /app/.next ./.next
+# Copia os arquivos estáticos públicos
 COPY --from=builder /app/public ./public
 
 # Se você usa next.config.* ou outros artefatos em runtime, pode precisar copiar também
