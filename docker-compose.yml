@@ -13,7 +13,7 @@ services:
       - "8000:8000"
     # dizendo onde está o arquivo de variáveis de ambiente do backend para o container utilizar elas sem precisar colocar no Dockerfile (não copia pro container, apenas seta as variáveis de ambiente lá dentro)
     env_file:
-      - ./backend/.env.local
+      - ./backend/.env
     environment:
       - FRONTEND_URL=http://frontend:3000 # URL interna (rede do compose)
       - BACKEND_URL=http://backend:8000 # URL interna (rede do compose)
