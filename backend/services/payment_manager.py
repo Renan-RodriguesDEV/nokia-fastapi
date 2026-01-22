@@ -30,7 +30,7 @@ class PaymentManager:
             "back_urls": {
                 "success": f"{url}/payments/success",
                 "failure": f"{url}/payments/failure",
-                "pending": f"{url}/payments/pendings",
+                "pending": f"{url}/payments/pending",
             },
             "auto_return": "approved",
         }

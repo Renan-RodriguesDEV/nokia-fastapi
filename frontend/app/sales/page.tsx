@@ -66,14 +66,16 @@ export default function SalesPage() {
             quantity: 1,
             unit_price: sortedSales.find((s) => s.id === saleId)?.value || 0,
           }),
-        }
+        },
       );
 
       if (!response.ok) {
+        console.log("Response not ok:", response);
         throw new Error("Erro ao gerar link de pagamento");
       }
 
       const data = await response.json();
+      console.log("Payment link data:", data);
       const initPoint = data.data.payment.init_point;
 
       setPaymentLinks((prev) => ({
@@ -203,7 +205,7 @@ export default function SalesPage() {
       if (type === "single" && selectedSales.size > 0) {
         await salesApi.markMultipleSalesAsPaid(
           Array.from(selectedSales),
-          token
+          token,
         );
       } else if (type === "user" && filterByUser) {
         const userSales = sales
@@ -242,7 +244,7 @@ export default function SalesPage() {
   }
 
   const uniqueUsers = Array.from(
-    new Map(sales.map((s) => [s.user_id, s.user])).values()
+    new Map(sales.map((s) => [s.user_id, s.user])).values(),
   );
 
   return (
@@ -291,7 +293,7 @@ export default function SalesPage() {
                       value={filterByUser || ""}
                       onChange={(e) =>
                         setFilterByUser(
-                          e.target.value ? parseInt(e.target.value) : null
+                          e.target.value ? parseInt(e.target.value) : null,
                         )
                       }
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
@@ -317,7 +319,7 @@ export default function SalesPage() {
                       value={filterByPayment}
                       onChange={(e) =>
                         setFilterByPayment(
-                          e.target.value as "all" | "paid" | "pending"
+                          e.target.value as "all" | "paid" | "pending",
                         )
                       }
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
@@ -339,7 +341,7 @@ export default function SalesPage() {
                             | "date"
                             | "status"
                             | "client"
-                            | "pending"
+                            | "pending",
                         )
                       }
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
@@ -371,7 +373,7 @@ export default function SalesPage() {
                         disabled={
                           marking ||
                           !sortedSales.some(
-                            (s) => s.user_id === filterByUser && !s.was_paid
+                            (s) => s.user_id === filterByUser && !s.was_paid,
                           )
                         }
                         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition"
@@ -404,7 +406,7 @@ export default function SalesPage() {
                       value={filterByPayment}
                       onChange={(e) =>
                         setFilterByPayment(
-                          e.target.value as "all" | "paid" | "pending"
+                          e.target.value as "all" | "paid" | "pending",
                         )
                       }
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
@@ -426,7 +428,7 @@ export default function SalesPage() {
                             | "date"
                             | "status"
                             | "client"
-                            | "pending"
+                            | "pending",
                         )
                       }
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
@@ -570,7 +572,7 @@ export default function SalesPage() {
                             <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
                               {new Date(sale.created_at).toLocaleDateString(
                                 "pt-BR",
-                                { day: "2-digit", month: "2-digit" }
+                                { day: "2-digit", month: "2-digit" },
                               )}
                             </td>
                             {user?.is_admin && (
