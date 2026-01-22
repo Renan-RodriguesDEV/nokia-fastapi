@@ -21,7 +21,7 @@ export default function ProductsPage() {
   // Estados principais
   const [products, setProducts] = useState<Product[]>([]);
   const [productImages, setProductImages] = useState<Record<number, string>>(
-    {}
+    {},
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -72,7 +72,7 @@ export default function ProductsPage() {
         try {
           const imageBase64 = await productsApi.getProductImage(
             product.id,
-            token
+            token,
           );
           if (imageBase64) {
             images[product.id] = `data:image/jpeg;base64,${imageBase64}`;
@@ -84,7 +84,7 @@ export default function ProductsPage() {
 
       setProductImages(images);
     },
-    [token]
+    [token],
   );
 
   const loadProducts = useCallback(async () => {
@@ -204,7 +204,7 @@ export default function ProductsPage() {
         savedProduct = await productsApi.updateProduct(
           editingProduct.id,
           formData,
-          token
+          token,
         );
         setSuccess("Produto atualizado com sucesso!");
       } else {
@@ -277,7 +277,7 @@ export default function ProductsPage() {
         "[PRODUCTS] Adicionando ao carrinho:",
         product.id,
         "count:",
-        finalQty
+        finalQty,
       );
       await cartApi.addToCart(
         {
@@ -285,7 +285,7 @@ export default function ProductsPage() {
           product_id: product.id,
           count: finalQty,
         },
-        token
+        token,
       );
       setSuccess(`${product.name} (x${finalQty}) adicionado ao carrinho!`);
     } catch (err: unknown) {
@@ -441,12 +441,13 @@ export default function ProductsPage() {
                 className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-slate-700 overflow-hidden group"
               >
                 {/* Imagem do produto */}
-                <div className="relative h-48 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center">
+                <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center overflow-hidden">
                   {productImages[product.id] ? (
                     <img
                       src={productImages[product.id]}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (
                     <span className="text-6xl opacity-50">🥖</span>
@@ -521,7 +522,7 @@ export default function ProductsPage() {
                           onChange={(e) =>
                             handleQuantityChange(
                               product.id,
-                              parseInt(e.target.value || "1", 10)
+                              parseInt(e.target.value || "1", 10),
                             )
                           }
                           className="w-16 px-2 py-2 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white text-center text-sm"
@@ -536,8 +537,8 @@ export default function ProductsPage() {
                           {addingToCart === product.id
                             ? "..."
                             : product.stock === 0
-                            ? "Esgotado"
-                            : "🛒 Adicionar"}
+                              ? "Esgotado"
+                              : "🛒 Adicionar"}
                         </button>
                       </div>
                     )}
@@ -707,8 +708,8 @@ export default function ProductsPage() {
                   {isSaving
                     ? "Salvando..."
                     : editingProduct
-                    ? "Atualizar"
-                    : "Criar"}
+                      ? "Atualizar"
+                      : "Criar"}
                 </button>
               </div>
             </form>
@@ -784,7 +785,7 @@ export default function ProductsPage() {
                       onChange={(e) =>
                         handleQuantityChange(
                           selectedProduct.id,
-                          parseInt(e.target.value || "1", 10)
+                          parseInt(e.target.value || "1", 10),
                         )
                       }
                       className="w-20 px-3 py-2 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white text-center"
@@ -795,7 +796,7 @@ export default function ProductsPage() {
                     onClick={() => {
                       handleAddToCart(
                         selectedProduct,
-                        quantities[selectedProduct.id] ?? 1
+                        quantities[selectedProduct.id] ?? 1,
                       );
                       setShowDetailsModal(false);
                     }}
