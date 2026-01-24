@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from exceptions.handle_exceptions import exception_payment_error
+from logger.handle_logger import logger
 from mercadopago import SDK
 
 load_dotenv()
@@ -34,6 +35,7 @@ class PaymentManager:
             },
             "auto_return": "approved",
         }
+        logger.debug(f"Preference data: {preference_data}")
         preference_response: dict = dict()
         try:
             preference_response: dict = self.sdk.preference().create(preference_data)
