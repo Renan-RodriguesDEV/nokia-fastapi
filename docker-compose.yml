@@ -16,7 +16,7 @@ services:
       - ./backend/.env
     environment:
       - FRONTEND_URL=http://frontend:3000 # URL interna (rede do compose)
-      - BACKEND_URL=http://backend:8000 # URL interna (rede do compose)
+      # - BACKEND_URL=http://backend:8000 # URL interna (rede do compose)
     
   frontend:
     build: ./frontend
