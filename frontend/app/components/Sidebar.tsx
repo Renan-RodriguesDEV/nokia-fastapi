@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Sidebar() {
@@ -64,7 +64,13 @@ export default function Sidebar() {
       color: "hover:text-red-500 dark:hover:text-red-400",
     },
     {
-      icon: "💰",
+      icon: "�",
+      label: "Gerenciar Vendas",
+      href: "/admin/sales",
+      color: "hover:text-orange-500 dark:hover:text-orange-400",
+    },
+    {
+      icon: "📊",
       label: "Histórico de Vendas",
       href: "/sales",
       color: "hover:text-green-500 dark:hover:text-green-400",

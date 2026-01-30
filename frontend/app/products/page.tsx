@@ -587,13 +587,22 @@ export default function ProductsPage() {
                     type="number"
                     step="0.01"
                     min="0"
-                    value={formData.price}
-                    onChange={(e) =>
+                    value={formData.price === 0 ? "" : formData.price}
+                    onChange={(e) => {
+                      const value = e.target.value;
                       setFormData({
                         ...formData,
-                        price: parseFloat(e.target.value) || 0,
-                      })
-                    }
+                        price: value === "" ? 0 : parseFloat(value) || 0,
+                      });
+                    }}
+                    onBlur={() => {
+                      if (formData.price === 0) {
+                        setFormData({
+                          ...formData,
+                          price: 0,
+                        });
+                      }
+                    }}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                     required
                   />
@@ -605,13 +614,22 @@ export default function ProductsPage() {
                   <input
                     type="number"
                     min="0"
-                    value={formData.stock}
-                    onChange={(e) =>
+                    value={formData.stock === 0 ? "" : formData.stock}
+                    onChange={(e) => {
+                      const value = e.target.value;
                       setFormData({
                         ...formData,
-                        stock: parseInt(e.target.value) || 0,
-                      })
-                    }
+                        stock: value === "" ? 0 : parseInt(value) || 0,
+                      });
+                    }}
+                    onBlur={() => {
+                      if (formData.stock === 0) {
+                        setFormData({
+                          ...formData,
+                          stock: 0,
+                        });
+                      }
+                    }}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                     required
                   />

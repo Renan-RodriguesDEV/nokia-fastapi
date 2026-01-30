@@ -68,7 +68,7 @@ export const salesApi = {
 
   /**
    * Criar venda / Finalizar compra
-   * @param data - { user_id, product_id, quantity, was_paid }
+   * @param data - { user_id, product_id, count, was_paid }
    * @param token - JWT access token
    * @returns Dados da venda criada
    */
@@ -76,7 +76,7 @@ export const salesApi = {
     data: {
       user_id: number;
       product_id: number;
-      quantity: number;
+      count: number;
       was_paid: boolean;
     },
     token: string
@@ -133,5 +133,48 @@ export const salesApi = {
       )
     );
     return results;
+  },
+
+  /**
+   * Deletar uma venda
+   * @param id - ID da venda
+   * @param token - JWT access token
+   * @returns Confirmação de deleção
+   */
+  deleteSale: async (id: number, token: string) => {
+    const response = await fetch(`${API_BASE_URL}/sales/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.json();
+  },
+
+  /**
+   * Atualizar uma venda completa
+   * @param id - ID da venda
+   * @param data - { count, payment_id?, was_paid? }
+   * @param token - JWT access token
+   * @returns Dados da venda atualizada
+   */
+  updateSale: async (
+    id: number,
+    data: {
+      count?: number;
+      payment_id?: string;
+      was_paid?: boolean;
+    },
+    token: string
+  ) => {
+    const response = await fetch(`${API_BASE_URL}/sales/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
   },
 };

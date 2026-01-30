@@ -25,6 +25,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
+  const isRegisterPage = pathname === "/register";
 
   return (
     <html lang="pt-BR" className="dark" suppressHydrationWarning>
@@ -38,11 +39,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 transition-colors`}
       >
         <NotificationProvider>
-          {!isLoginPage && <Header />}
-          {!isLoginPage && <Sidebar />}
+          {!isLoginPage && !isRegisterPage && <Header />}
+          {!isLoginPage && !isRegisterPage && <Sidebar />}
           <main
             className={`min-h-screen transition-all duration-300 ${
-              !isLoginPage ? "sm:ml-20" : ""
+              !isLoginPage && !isRegisterPage ? "sm:ml-20" : ""
             } pt-2 sm:pt-4 px-4 sm:px-6`}
           >
             {children}
