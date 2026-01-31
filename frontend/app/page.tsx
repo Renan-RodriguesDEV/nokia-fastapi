@@ -12,12 +12,12 @@ export default function HomePage() {
   // 🔍 DEBUG: Monitorar estado na página home
   useEffect(() => {
     console.log(
-      `[HOME] isLoading: ${isLoading}, isAuthenticated: ${isAuthenticated}, user: ${!!user}`
+      `[HOME] isLoading: ${isLoading}, isAuthenticated: ${isAuthenticated}, user: ${!!user}`,
     );
 
     if (!isLoading && !isAuthenticated) {
       console.log(
-        `[HOME] Usuário não autenticado! Redirecionando para login...`
+        `[HOME] Usuário não autenticado! Redirecionando para login...`,
       );
       router.push("/login");
     }
@@ -36,7 +36,7 @@ export default function HomePage() {
   // 🔍 DEBUG: Verificar se não está autenticado
   if (!isAuthenticated || !user) {
     console.log(
-      `[HOME] Não autenticado ou usuário não carregado. isAuthenticated: ${isAuthenticated}, user: ${!!user}`
+      `[HOME] Não autenticado ou usuário não carregado. isAuthenticated: ${isAuthenticated}, user: ${!!user}`,
     );
     return null;
   }
@@ -222,6 +222,13 @@ export default function HomePage() {
                 <span>
                   <strong>Acompanhar Vendas:</strong> Monitore todas as
                   transações e vendas realizadas.
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-lg">📊</span>
+                <span>
+                  <strong>Gerenciar Vendas:</strong> Crie, edite e gerencie
+                  vendas do sistema de forma completa.
                 </span>
               </li>
             </ul>
