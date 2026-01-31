@@ -30,7 +30,7 @@ export default function CartsPage() {
   const [purchasingId, setPurchasingId] = useState<number | null>(null);
 
   const loadCart = useCallback(async () => {
-    if (!token) return;
+    if (!token || !user) return;
 
     try {
       setLoadingData(true);
@@ -42,7 +42,14 @@ export default function CartsPage() {
       }
 
       const data = await cartApi.getCart(filters, token);
-      setCartItems(Array.isArray(data) ? data : []);
+
+      // Validação adicional: garantir que clientes só veem seus próprios itens
+      let filteredData = Array.isArray(data) ? data : [];
+      if (!user?.is_admin && user?.id) {
+        filteredData = filteredData.filter((item) => item.user_id === user.id);
+      }
+
+      setCartItems(filteredData);
     } catch (err) {
       console.error("Erro ao carregar carrinho:", err);
       setError("Erro ao carregar carrinho.");
@@ -117,7 +124,7 @@ export default function CartsPage() {
   const totalItems = cartItems.length;
   const totalValue = cartItems.reduce(
     (sum, item) => sum + (item.product?.price || 0) * item.count,
-    0
+    0,
   );
 
   return (

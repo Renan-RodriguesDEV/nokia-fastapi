@@ -60,13 +60,16 @@ async def create(
 )
 async def delete(
     id: int,
-    session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
 ):
     cart = session.query(ShoppingCart).filter(ShoppingCart.id == id).first()
     if not cart:
         raise exception_cart_not_found
     if current_user.id != cart.user_id and not current_user.is_admin:
+        print("id do usuario carrinho", cart.user_id)
+        print("id do usuário", current_user.id)
+        print("nome do usuário", current_user.username)
         raise exception_access_dained_for_user
     session.delete(cart)
     session.commit()
