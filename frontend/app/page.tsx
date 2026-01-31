@@ -91,6 +91,13 @@ export default function HomePage() {
       href: "/sales",
       color: "from-green-500 to-green-600",
     },
+    {
+      icon: "📊",
+      title: "Gerenciar Vendas",
+      description: "Criar, editar e gerenciar vendas do sistema",
+      href: "/admin/sales",
+      color: "from-amber-500 to-orange-600",
+    },
   ];
 
   const features = user.is_admin ? adminFeatures : clientFeatures;
