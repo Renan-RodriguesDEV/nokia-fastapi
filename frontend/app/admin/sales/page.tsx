@@ -153,14 +153,27 @@ export default function AdminSalesPage() {
     e.preventDefault();
     if (!token) return;
 
+    // Validar campos obrigatórios
+    if (!formData.user_id || !formData.product_id) {
+      setError("Cliente e Produto são obrigatórios");
+      return;
+    }
+
+    if (formData.count <= 0) {
+      setError("Quantidade deve ser maior que 0");
+      return;
+    }
+
     setIsSaving(true);
     setError("");
     setSuccess("");
 
     try {
       if (editingSale) {
-        // Atualizar venda (PATCH) - todos os campos são opcionais
+        // Atualizar venda (PUT) - atualizar todos os campos
         const updateData = {
+          user_id: formData.user_id,
+          product_id: formData.product_id,
           count: formData.count,
           was_paid: formData.was_paid,
         };
@@ -168,7 +181,7 @@ export default function AdminSalesPage() {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/sales/update/${editingSale.id}`,
           {
-            method: "PATCH",
+            method: "PUT",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
@@ -311,32 +324,34 @@ export default function AdminSalesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 p-4 sm:p-6">
       <Backbutton />
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Gerenciar Vendas</h1>
-        <p className="text-gray-400">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          Gerenciar Vendas
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Adicione, edite e remova vendas de clientes
         </p>
       </div>
 
       {/* Mensagens de erro e sucesso */}
       {error && (
-        <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400">
+        <div className="mb-4 p-4 bg-red-100 dark:bg-red-500/10 border border-red-300 dark:border-red-500/20 rounded-lg text-red-700 dark:text-red-400">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400">
+        <div className="mb-4 p-4 bg-green-100 dark:bg-green-500/10 border border-green-300 dark:border-green-500/20 rounded-lg text-green-700 dark:text-green-400">
           {success}
         </div>
       )}
 
       {/* Filtros e botão de criar */}
-      <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-4 sm:p-6 mb-6">
+      <div className="bg-white dark:bg-slate-800/50 backdrop-blur border border-gray-200 dark:border-slate-700/50 rounded-xl p-4 sm:p-6 mb-6">
         {/* Busca */}
         <div className="mb-4">
           <input
@@ -344,7 +359,7 @@ export default function AdminSalesPage() {
             placeholder="Buscar por cliente ou produto..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-500/50"
+            className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-amber-500/50"
           />
         </div>
 
@@ -356,15 +371,17 @@ export default function AdminSalesPage() {
             onChange={(e) =>
               setFilterByUser(e.target.value ? Number(e.target.value) : null)
             }
-            className="px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50 truncate"
+            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 truncate"
             title={users.find((u) => u.id === filterByUser)?.name}
           >
             <option value="">Clientes</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id} title={u.name}>
-                {u.name}
-              </option>
-            ))}
+            {[...users]
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((u) => (
+                <option key={u.id} value={u.id} title={u.name}>
+                  {u.name}
+                </option>
+              ))}
           </select>
 
           {/* Filtro por pagamento */}
@@ -373,7 +390,7 @@ export default function AdminSalesPage() {
             onChange={(e) =>
               setFilterByPayment(e.target.value as "all" | "paid" | "pending")
             }
-            className="px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50"
+            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50"
           >
             <option value="all">Todas</option>
             <option value="pending">Pendentes</option>
@@ -391,9 +408,9 @@ export default function AdminSalesPage() {
       </div>
 
       {/* Tabela de vendas */}
-      <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-800/50 backdrop-blur border border-gray-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
         {filteredSales.length === 0 ? (
-          <div className="p-8 text-center text-gray-400">
+          <div className="p-8 text-center text-gray-500 dark:text-gray-400">
             <p className="text-lg mb-2">Nenhuma venda encontrada</p>
             <p className="text-sm">Crie uma nova venda para começar</p>
           </div>
@@ -401,26 +418,26 @@ export default function AdminSalesPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-slate-900/50 border-b border-slate-700/50">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
+                <tr className="bg-gray-50 dark:bg-slate-900/50 border-b border-gray-200 dark:border-slate-700/50">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Cliente
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Produto
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Qtd
                   </th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Valor
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Status
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Data
                   </th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-300">
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Ações
                   </th>
                 </tr>
@@ -429,46 +446,46 @@ export default function AdminSalesPage() {
                 {filteredSales.map((sale) => (
                   <tr
                     key={sale.id}
-                    className="border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors"
+                    className="border-b border-gray-200 dark:border-slate-700/30 hover:bg-gray-100 dark:hover:bg-slate-700/20 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm text-white">
+                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
                       {sale.user.name}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-300">
+                    <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
                       {sale.product.name}
                     </td>
-                    <td className="px-6 py-4 text-sm text-right text-white">
+                    <td className="px-6 py-4 text-sm text-right text-gray-900 dark:text-white">
                       {sale.count}
                     </td>
-                    <td className="px-6 py-4 text-sm text-right text-amber-400 font-medium">
+                    <td className="px-6 py-4 text-sm text-right text-amber-600 dark:text-amber-400 font-medium">
                       R$ {sale.value.toFixed(2)}
                     </td>
                     <td className="px-6 py-4 text-sm text-center">
                       <span
                         className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                           sale.was_paid
-                            ? "bg-green-500/20 text-green-400"
-                            : "bg-yellow-500/20 text-yellow-400"
+                            ? "bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400"
+                            : "bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-400"
                         }`}
                       >
                         {sale.was_paid ? "✓ Paga" : "⏳ Pendente"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-center text-gray-400">
+                    <td className="px-6 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
                       {new Date(sale.created_at).toLocaleDateString("pt-BR")}
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex justify-center gap-2">
                         <button
                           onClick={() => openEditModal(sale)}
-                          className="p-2 text-blue-400 hover:bg-blue-500/20 rounded-lg transition-colors"
+                          className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 rounded-lg transition-colors"
                           title="Editar"
                         >
                           ✏️
                         </button>
                         <button
                           onClick={() => openDeleteModal(sale)}
-                          className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
+                          className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 rounded-lg transition-colors"
                           title="Deletar"
                         >
                           🗑️
@@ -486,15 +503,15 @@ export default function AdminSalesPage() {
       {/* Modal de criar/editar venda */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold text-white mb-6">
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
               {editingSale ? "Editar Venda" : "Nova Venda"}
             </h2>
 
             <form onSubmit={handleSave} className="space-y-4">
               {/* Cliente */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Cliente *
                 </label>
                 <select
@@ -506,20 +523,22 @@ export default function AdminSalesPage() {
                     })
                   }
                   required
-                  className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="">Selecione um cliente</option>
-                  {users.map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.name} ({u.username})
-                    </option>
-                  ))}
+                  {[...users]
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((u) => (
+                      <option key={u.id} value={u.id}>
+                        {u.name} ({u.username})
+                      </option>
+                    ))}
                 </select>
               </div>
 
               {/* Produto */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Produto *
                 </label>
                 <select
@@ -531,31 +550,36 @@ export default function AdminSalesPage() {
                     })
                   }
                   required
-                  className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="">Selecione um produto</option>
-                  {products.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name} - R$ {p.price.toFixed(2)}
-                    </option>
-                  ))}
+                  {[...products]
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name} - R$ {p.price.toFixed(2)}
+                      </option>
+                    ))}
                 </select>
               </div>
 
               {/* Quantidade */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Quantidade *
                 </label>
                 <input
                   type="number"
                   min="1"
-                  value={formData.count}
+                  value={formData.count || ""}
                   onChange={(e) =>
-                    setFormData({ ...formData, count: Number(e.target.value) })
+                    setFormData({
+                      ...formData,
+                      count: Number(e.target.value) || 0,
+                    })
                   }
                   required
-                  className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                 />
               </div>
 
@@ -572,7 +596,7 @@ export default function AdminSalesPage() {
                 />
                 <label
                   htmlFor="was_paid"
-                  className="ml-2 text-sm text-gray-300"
+                  className="ml-2 text-sm text-gray-700 dark:text-gray-300"
                 >
                   Marcar como paga
                 </label>
@@ -583,7 +607,7 @@ export default function AdminSalesPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-900 dark:text-white rounded-lg font-medium transition-colors"
                 >
                   Cancelar
                 </button>
@@ -603,11 +627,11 @@ export default function AdminSalesPage() {
       {/* Modal de confirmação para deletar */}
       {showDeleteModal && saleToDelete && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold text-white mb-4">
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Deletar Venda
             </h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-700 dark:text-gray-300 mb-6">
               Tem certeza que deseja deletar a venda de{" "}
               <span className="font-semibold">{saleToDelete.product.name}</span>{" "}
               para{" "}
@@ -616,7 +640,7 @@ export default function AdminSalesPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+                className="flex-1 px-4 py-2 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-900 dark:text-white rounded-lg font-medium transition-colors"
               >
                 Cancelar
               </button>

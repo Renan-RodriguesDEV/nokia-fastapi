@@ -191,6 +191,22 @@ export default function ProductsPage() {
     e.preventDefault();
     if (!token) return;
 
+    // Validar campos obrigatórios
+    if (!formData.name.trim()) {
+      setError("Nome do produto é obrigatório");
+      return;
+    }
+
+    if (formData.price <= 0) {
+      setError("Preço deve ser maior que 0");
+      return;
+    }
+
+    if (formData.stock < 0) {
+      setError("Estoque não pode ser negativo");
+      return;
+    }
+
     setIsSaving(true);
     setError("");
     setSuccess("");

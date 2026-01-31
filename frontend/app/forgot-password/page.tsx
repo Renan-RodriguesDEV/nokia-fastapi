@@ -36,13 +36,12 @@ export default function ForgotPasswordPage() {
         const errorData = await response.json();
         throw new Error(
           errorData.detail ||
-            "Erro ao solicitar reset de senha. Verifique o email e tente novamente."
+            "Erro ao solicitar reset de senha. Verifique o email e tente novamente.",
         );
       }
 
-      const data = await response.json();
       setSuccess(
-        "Email de reset enviado! Verifique seu email para o código de recuperação."
+        "Email de reset enviado! Verifique seu email para o código de recuperação.",
       );
       setStep("reset");
     } catch (err: any) {
@@ -85,7 +84,7 @@ export default function ForgotPasswordPage() {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.detail || "Erro ao resetar senha. Tente novamente."
+          errorData.detail || "Erro ao resetar senha. Tente novamente.",
         );
       }
 
@@ -372,7 +371,8 @@ export default function ForgotPasswordPage() {
         {/* Footer Info */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-500">
-            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos reservados.
+            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos
+            reservados.
           </p>
         </div>
       </div>

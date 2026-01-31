@@ -2,8 +2,7 @@
 
 import { salesApi } from "@/lib/api/sales";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Backbutton } from "@/app/components/Backbutton";
 
 interface Sale {
@@ -29,8 +28,7 @@ interface Sale {
 }
 
 export default function SalesPage() {
-  const { user, isAuthenticated, isLoading, token } = useAuth();
-  const router = useRouter();
+  const { user, isLoading, token } = useAuth();
   const [sales, setSales] = useState<Sale[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,53 +92,6 @@ export default function SalesPage() {
     }
   };
 
-  const loadSales = useCallback(async () => {
-    if (!token) return;
-
-    try {
-      setLoadingData(true);
-      setError(null);
-
-      let data;
-      if (user?.is_admin) {
-        // Admin vê todas as vendas
-        data = await salesApi.getAllSales(token);
-      } else {
-        // Cliente vê apenas suas vendas
-        data = await salesApi.getSalesFiltered({ user_id: user?.id }, token);
-      }
-
-      setSales(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Erro ao carregar vendas:", err);
-      setError("Erro ao carregar histórico de vendas.");
-      setSales([]);
-    } finally {
-      setLoadingData(false);
-    }
-  }, [token, user]);
-
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.push("/login");
-      return;
-    }
-
-    if (user && token) {
-      loadSales();
-    }
-  }, [isAuthenticated, isLoading, user, token, router, loadSales]);
-
-  const handleSelectSale = (saleId: number) => {
-    const newSelected = new Set(selectedSales);
-    if (newSelected.has(saleId)) {
-      newSelected.delete(saleId);
-    } else {
-      newSelected.add(saleId);
-    }
-    setSelectedSales(newSelected);
-  };
-
   const handleSelectAll = () => {
     if (selectedSales.size === sortedSales.length) {
       setSelectedSales(new Set());
@@ -195,6 +146,26 @@ export default function SalesPage() {
     return 0;
   });
 
+  useEffect(() => {
+    const loadSalesData = async () => {
+      if (!token) return;
+
+      try {
+        setLoadingData(true);
+        setError(null);
+        const data = await salesApi.getAllSales(token);
+        setSales(data);
+      } catch (err) {
+        console.error("Erro ao carregar vendas:", err);
+        setError("Erro ao carregar vendas. Tente novamente.");
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    loadSalesData();
+  }, [token]);
+
   const handleMarkAsPaid = async (type: "single" | "user" | "all") => {
     if (!token) return;
 
@@ -224,7 +195,16 @@ export default function SalesPage() {
         return;
       }
 
-      await loadSales();
+      // Recarregar dados após marcar como pago
+      setLoadingData(true);
+      try {
+        const updatedSales = await salesApi.getAllSales(token);
+        setSales(updatedSales);
+      } catch (err) {
+        console.error("Erro ao recarregar vendas:", err);
+      } finally {
+        setLoadingData(false);
+      }
       setSelectedSales(new Set());
       setFilterByUser(null);
     } catch (err) {
@@ -299,16 +279,18 @@ export default function SalesPage() {
                       className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
                     >
                       <option value="">Todos os clientes</option>
-                      {uniqueUsers.map((u) => (
-                        <option
-                          key={u.name}
-                          value={
-                            sales.find((s) => s.user.name === u.name)?.user_id
-                          }
-                        >
-                          {u.name}
-                        </option>
-                      ))}
+                      {[...uniqueUsers]
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((u) => (
+                          <option
+                            key={u.name}
+                            value={
+                              sales.find((s) => s.user.name === u.name)?.user_id
+                            }
+                          >
+                            {u.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div>
@@ -397,7 +379,7 @@ export default function SalesPage() {
             {/* Controles para Cliente */}
             {!user?.is_admin && (
               <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Status de Pagamento
@@ -441,8 +423,6 @@ export default function SalesPage() {
                 </div>
               </div>
             )}
-
-            {/* Mensagem informativa para cliente */}
             {!user?.is_admin && (
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl shadow-lg p-6 border border-blue-200 dark:border-blue-700">
                 <div className="flex gap-4">
@@ -452,17 +432,19 @@ export default function SalesPage() {
                       Como funciona o pagamento
                     </h3>
                     <p className="text-blue-800 dark:text-blue-300">
-                      1. Clique em <strong>"Gerar Link"</strong> para criar um
-                      link de pagamento único
+                      1. Clique em <strong>&quot;Gerar Link&quot;</strong> para
+                      criar um link de pagamento único
                       <br />
-                      2. Clique em <strong>"Ir ao Checkout"</strong> para abrir
-                      a tela de pagamento no Mercado Pago
+                      2. Clique em <strong>
+                        &quot;Ir ao Checkout&quot;
+                      </strong>{" "}
+                      para abrir a tela de pagamento no Mercado Pago
                       <br />
                       3. Após o pagamento aprovado, sua compra será marcada como
                       paga automaticamente
                       <br />
-                      Você poderá acompanhar o status aqui em "⏳ Pendentes" ou
-                      "✓ Pagas".
+                      Você poderá acompanhar o status aqui em &quot;⏳
+                      Pendentes&quot; ou &quot;✓ Pagas&quot;.
                     </p>
                   </div>
                 </div>
@@ -535,7 +517,15 @@ export default function SalesPage() {
                                 <input
                                   type="checkbox"
                                   checked={selectedSales.has(sale.id)}
-                                  onChange={() => handleSelectSale(sale.id)}
+                                  onChange={() => {
+                                    const newSelected = new Set(selectedSales);
+                                    if (newSelected.has(sale.id)) {
+                                      newSelected.delete(sale.id);
+                                    } else {
+                                      newSelected.add(sale.id);
+                                    }
+                                    setSelectedSales(newSelected);
+                                  }}
                                   disabled={sale.was_paid}
                                   className="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
