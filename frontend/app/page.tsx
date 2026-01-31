@@ -263,7 +263,10 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="mt-20 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600 dark:text-gray-400">
-          <p>© 2026 Padaria FastAPI. Todos os direitos reservados.</p>
+          <p>
+            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos
+            reservados.
+          </p>
         </div>
       </footer>
     </div>

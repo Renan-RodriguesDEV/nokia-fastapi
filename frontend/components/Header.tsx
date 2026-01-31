@@ -27,7 +27,7 @@ export function Header() {
               <span className="text-base sm:text-lg">🍞</span>
             </div>
             <h1 className="text-base sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white truncate">
-              Padaria FastAPI
+              Padaria da Vila - Itaí/SP
             </h1>
           </Link>
 
@@ -279,7 +279,7 @@ export function Header() {
                           </p>
                           <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
                             {new Date(
-                              notification.timestamp
+                              notification.timestamp,
                             ).toLocaleTimeString("pt-BR")}
                           </span>
                         </div>

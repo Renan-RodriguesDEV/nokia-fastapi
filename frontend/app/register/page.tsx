@@ -74,7 +74,7 @@ export default function RegisterPage() {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Padaria FastAPI
+            Padaria da Vila
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Criar uma nova conta
@@ -257,7 +257,7 @@ export default function RegisterPage() {
         {/* Footer Info */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-500">
-            © 2026 Padaria FastAPI. Todos os direitos reservados.
+            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos reservados.
           </p>
         </div>
       </div>
