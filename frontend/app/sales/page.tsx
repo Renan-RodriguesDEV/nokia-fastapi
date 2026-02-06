@@ -148,23 +148,28 @@ export default function SalesPage() {
 
   useEffect(() => {
     const loadSalesData = async () => {
-      if (!token) return;
+      if (!token || !user) return;
 
       try {
         setLoadingData(true);
         setError(null);
-        const data = await salesApi.getAllSales(token);
-        setSales(data);
+
+        const data = user.is_admin
+          ? await salesApi.getAllSales(token)
+          : await salesApi.getSalesFiltered({ user_id: user.id }, token);
+
+        setSales(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Erro ao carregar vendas:", err);
         setError("Erro ao carregar vendas. Tente novamente.");
+        setSales([]);
       } finally {
         setLoadingData(false);
       }
     };
 
     loadSalesData();
-  }, [token]);
+  }, [token, user]);
 
   const handleMarkAsPaid = async (type: "single" | "user" | "all") => {
     if (!token) return;
@@ -198,8 +203,10 @@ export default function SalesPage() {
       // Recarregar dados após marcar como pago
       setLoadingData(true);
       try {
-        const updatedSales = await salesApi.getAllSales(token);
-        setSales(updatedSales);
+        const updatedSales = user?.is_admin
+          ? await salesApi.getAllSales(token)
+          : await salesApi.getSalesFiltered({ user_id: user?.id }, token);
+        setSales(Array.isArray(updatedSales) ? updatedSales : []);
       } catch (err) {
         console.error("Erro ao recarregar vendas:", err);
       } finally {
