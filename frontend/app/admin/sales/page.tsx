@@ -296,10 +296,8 @@ export default function AdminSalesPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Carregando vendas...
-          </p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+          <p className="mt-4 text-gray-700">Carregando vendas...</p>
         </div>
       </div>
     );
@@ -314,7 +312,7 @@ export default function AdminSalesPage() {
           </p>
           <button
             onClick={() => router.push("/")}
-            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg"
+            className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
           >
             Voltar
           </button>
@@ -371,7 +369,7 @@ export default function AdminSalesPage() {
             onChange={(e) =>
               setFilterByUser(e.target.value ? Number(e.target.value) : null)
             }
-            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 truncate"
+            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50 truncate"
             title={users.find((u) => u.id === filterByUser)?.name}
           >
             <option value="">Clientes</option>
@@ -390,7 +388,7 @@ export default function AdminSalesPage() {
             onChange={(e) =>
               setFilterByPayment(e.target.value as "all" | "paid" | "pending")
             }
-            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50"
+            className="px-3 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white text-sm focus:outline-none focus:border-green-500/50"
           >
             <option value="all">Todas</option>
             <option value="pending">Pendentes</option>
@@ -400,7 +398,7 @@ export default function AdminSalesPage() {
           {/* Botão de criar */}
           <button
             onClick={openCreateModal}
-            className="col-span-2 sm:col-span-1 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm sm:text-base rounded-lg font-medium transition-colors whitespace-nowrap"
+            className="col-span-2 sm:col-span-1 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm sm:text-base rounded-lg font-medium transition-colors whitespace-nowrap"
           >
             + Venda
           </button>
@@ -410,7 +408,7 @@ export default function AdminSalesPage() {
       {/* Tabela de vendas */}
       <div className="bg-white dark:bg-slate-800/50 backdrop-blur border border-gray-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
         {filteredSales.length === 0 ? (
-          <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+          <div className="p-8 text-center text-gray-700">
             <p className="text-lg mb-2">Nenhuma venda encontrada</p>
             <p className="text-sm">Crie uma nova venda para começar</p>
           </div>
@@ -457,7 +455,7 @@ export default function AdminSalesPage() {
                     <td className="px-6 py-4 text-sm text-right text-gray-900 dark:text-white">
                       {sale.count}
                     </td>
-                    <td className="px-6 py-4 text-sm text-right text-amber-600 dark:text-amber-400 font-medium">
+                    <td className="px-6 py-4 text-sm text-right text-green-600 dark:text-green-400 font-medium">
                       R$ {sale.value.toFixed(2)}
                     </td>
                     <td className="px-6 py-4 text-sm text-center">
@@ -471,7 +469,7 @@ export default function AdminSalesPage() {
                         {sale.was_paid ? "✓ Paga" : "⏳ Pendente"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-center text-gray-600 dark:text-gray-400">
+                    <td className="px-6 py-4 text-sm text-center text-gray-700">
                       {new Date(sale.created_at).toLocaleDateString("pt-BR")}
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -504,7 +502,7 @@ export default function AdminSalesPage() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
               {editingSale ? "Editar Venda" : "Nova Venda"}
             </h2>
 
@@ -523,7 +521,7 @@ export default function AdminSalesPage() {
                     })
                   }
                   required
-                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-green-500/50"
                 >
                   <option value="">Selecione um cliente</option>
                   {[...users]
@@ -550,7 +548,7 @@ export default function AdminSalesPage() {
                     })
                   }
                   required
-                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-green-500/50"
                 >
                   <option value="">Selecione um produto</option>
                   {[...products]
@@ -579,7 +577,7 @@ export default function AdminSalesPage() {
                     })
                   }
                   required
-                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                  className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-green-500/50"
                 />
               </div>
 
@@ -592,7 +590,7 @@ export default function AdminSalesPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, was_paid: e.target.checked })
                   }
-                  className="w-4 h-4 rounded accent-amber-500"
+                  className="w-4 h-4 rounded accent-green-500"
                 />
                 <label
                   htmlFor="was_paid"
@@ -614,7 +612,7 @@ export default function AdminSalesPage() {
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="flex-1 px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-lg font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white rounded-lg font-medium transition-colors"
                 >
                   {isSaving ? "Salvando..." : "Salvar"}
                 </button>
@@ -628,7 +626,7 @@ export default function AdminSalesPage() {
       {showDeleteModal && saleToDelete && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Deletar Venda
             </h2>
             <p className="text-gray-700 dark:text-gray-300 mb-6">

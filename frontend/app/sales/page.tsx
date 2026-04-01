@@ -225,7 +225,7 @@ export default function SalesPage() {
   if (isLoading || loadingData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -566,7 +566,7 @@ export default function SalesPage() {
                                 {sale.was_paid ? "✓" : "⏳"}
                               </span>
                             </td>
-                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-700 whitespace-nowrap">
                               {new Date(sale.created_at).toLocaleDateString(
                                 "pt-BR",
                                 { day: "2-digit", month: "2-digit" },
@@ -581,7 +581,7 @@ export default function SalesPage() {
                                       handleMarkAsPaid("single");
                                     }}
                                     disabled={marking}
-                                    className="px-2 sm:px-3 py-1 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white rounded text-[10px] sm:text-xs font-medium transition"
+                                    className="px-2 sm:px-3 py-1 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white rounded text-[10px] sm:text-xs font-medium transition"
                                   >
                                     {marking ? "..." : "Pagar"}
                                   </button>
@@ -634,7 +634,7 @@ export default function SalesPage() {
             {/* Botão de ação para múltiplas seleções */}
             {user?.is_admin && selectedSales.size > 0 && (
               <div className="fixed bottom-8 right-8 bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <p className="text-sm text-gray-700 mb-3">
                   {selectedSales.size} venda(s) selecionada(s)
                 </p>
                 <div className="flex gap-2">
@@ -658,7 +658,7 @@ export default function SalesPage() {
             {/* Resumo */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <p className="text-sm text-gray-700 mb-2">
                   Total de Transações
                 </p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -666,27 +666,21 @@ export default function SalesPage() {
                 </p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  Valor Total
-                </p>
+                <p className="text-sm text-gray-700 mb-2">Valor Total</p>
                 <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                   R${" "}
                   {sortedSales.reduce((sum, s) => sum + s.value, 0).toFixed(2)}
                 </p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  Pagos
-                </p>
+                <p className="text-sm text-gray-700 mb-2">Pagos</p>
                 <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                   {sortedSales.filter((s) => s.was_paid).length}/
                   {sortedSales.length}
                 </p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  Pendentes
-                </p>
+                <p className="text-sm text-gray-700 mb-2">Pendentes</p>
                 <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                   {sortedSales.filter((s) => !s.was_paid).length}
                 </p>

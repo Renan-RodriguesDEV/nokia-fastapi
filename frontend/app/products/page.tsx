@@ -345,7 +345,7 @@ export default function ProductsPage() {
   if (authLoading || isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -364,7 +364,7 @@ export default function ProductsPage() {
               href="/"
               className="flex items-center gap-1 sm:gap-2 min-w-fit flex-shrink-0"
             >
-              <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex-shrink-0">
+              <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex-shrink-0">
                 <span className="text-base sm:text-lg">🍞</span>
               </div>
               <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 truncate">
@@ -377,7 +377,7 @@ export default function ProductsPage() {
               {user.is_admin && (
                 <button
                   onClick={openCreateModal}
-                  className="px-3 sm:px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-lg transition text-xs sm:text-sm whitespace-nowrap flex-shrink-0"
+                  className="px-3 sm:px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-lg transition text-xs sm:text-sm whitespace-nowrap flex-shrink-0"
                 >
                   <span className="hidden sm:inline">+ Novo Produto</span>
                   <span className="sm:hidden">+</span>
@@ -411,7 +411,7 @@ export default function ProductsPage() {
               placeholder="Buscar produtos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
           <select
@@ -431,7 +431,7 @@ export default function ProductsPage() {
         {/* Grid de produtos */}
         {filteredProducts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-lg">
+            <p className="text-gray-700 text-lg">
               {searchTerm || categoryFilter !== "all"
                 ? "Nenhum produto encontrado com os filtros aplicados."
                 : "Nenhum produto cadastrado ainda."}
@@ -439,7 +439,7 @@ export default function ProductsPage() {
             {user.is_admin && !searchTerm && categoryFilter === "all" && (
               <button
                 onClick={openCreateModal}
-                className="mt-4 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-lg"
+                className="mt-4 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-lg"
               >
                 Criar primeiro produto
               </button>
@@ -466,7 +466,7 @@ export default function ProductsPage() {
                   )}
 
                   {/* Badge de categoria */}
-                  <span className="absolute top-2 left-2 px-2 py-1 text-xs font-semibold bg-amber-500 text-white rounded-full">
+                  <span className="absolute top-2 left-2 px-2 py-1 text-xs font-semibold bg-green-500 text-white rounded-full">
                     {product.category}
                   </span>
 
@@ -490,7 +490,7 @@ export default function ProductsPage() {
                     {formatPrice(product.price)}
                   </p>
 
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                  <div className="flex items-center justify-between text-sm text-gray-700 mb-4">
                     <span>Estoque: {product.stock}</span>
                     <span>Val: {formatDate(product.validity)}</span>
                   </div>
@@ -544,7 +544,7 @@ export default function ProductsPage() {
                           disabled={
                             product.stock === 0 || addingToCart === product.id
                           }
-                          className="flex-1 px-3 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition text-sm font-medium"
+                          className="flex-1 px-3 py-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition text-sm font-medium"
                         >
                           {addingToCart === product.id
                             ? "..."
@@ -584,7 +584,7 @@ export default function ProductsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
@@ -615,7 +615,7 @@ export default function ProductsPage() {
                         });
                       }
                     }}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
                   />
                 </div>
@@ -642,7 +642,7 @@ export default function ProductsPage() {
                         });
                       }
                     }}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
                   />
                 </div>
@@ -661,7 +661,7 @@ export default function ProductsPage() {
                       category: e.target.value as ProductCategory,
                     })
                   }
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 >
                   {PRODUCT_CATEGORIES.map((cat) => (
@@ -683,7 +683,7 @@ export default function ProductsPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, validity: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
@@ -696,7 +696,7 @@ export default function ProductsPage() {
                 <div className="flex items-center gap-4">
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 dark:border-slate-600 flex items-center justify-center cursor-pointer hover:border-amber-500 transition overflow-hidden"
+                    className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 dark:border-slate-600 flex items-center justify-center cursor-pointer hover:border-green-500 transition overflow-hidden"
                   >
                     {imagePreview ? (
                       <img
@@ -715,7 +715,7 @@ export default function ProductsPage() {
                     onChange={handleImageChange}
                     className="hidden"
                   />
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-gray-700">
                     Clique para selecionar uma imagem
                   </div>
                 </div>
@@ -733,7 +733,7 @@ export default function ProductsPage() {
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition font-medium"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition font-medium"
                 >
                   {isSaving
                     ? "Salvando..."
@@ -751,7 +751,7 @@ export default function ProductsPage() {
       {showDetailsModal && selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 overflow-y-auto">
           <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-lg my-4 max-h-[95vh] overflow-y-auto">
-            <div className="relative h-64 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-700 dark:to-slate-600 rounded-t-2xl flex items-center justify-center">
+            <div className="relative h-64 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-slate-700 dark:to-slate-600 rounded-t-2xl flex items-center justify-center">
               {productImages[selectedProduct.id] ? (
                 <img
                   src={productImages[selectedProduct.id]}
@@ -770,7 +770,7 @@ export default function ProductsPage() {
             </div>
 
             <div className="p-6">
-              <span className="inline-block px-3 py-1 text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full mb-3">
+              <span className="inline-block px-3 py-1 text-xs font-semibold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full mb-3">
                 {selectedProduct.category}
               </span>
 
@@ -778,7 +778,7 @@ export default function ProductsPage() {
                 {selectedProduct.name}
               </h2>
 
-              <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-6">
+              <p className="text-3xl font-bold text-green-600 dark:text-green-400 mb-6">
                 {formatPrice(selectedProduct.price)}
               </p>
 
@@ -831,7 +831,7 @@ export default function ProductsPage() {
                       setShowDetailsModal(false);
                     }}
                     disabled={selectedProduct.stock === 0}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition font-bold"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition font-bold"
                   >
                     {selectedProduct.stock === 0
                       ? "Produto Esgotado"
@@ -855,7 +855,7 @@ export default function ProductsPage() {
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 Confirmar Exclusão
               </h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-700">
                 Tem certeza que deseja excluir o produto{" "}
                 <strong className="text-gray-900 dark:text-white">
                   {productToDelete.name}

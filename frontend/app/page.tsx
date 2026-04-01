@@ -194,7 +194,7 @@ export default function HomePage() {
 
         {/* Restrictions Section */}
         <div className="mt-16 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-8">
-          <h4 className="text-lg font-bold text-gray-900 dark:text-blue-200 mb-4">
+          <h4 className="text-lg font-bold text-gray-900 mb-4">
             🎯 Dicas para Aproveitar
           </h4>
           {user.is_admin ? (
@@ -258,7 +258,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="mt-20 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600 dark:text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-700">
           <p>© 2026 Nokia by @Renan Rodrigues. Todos os direitos reservados.</p>
         </div>
       </footer>

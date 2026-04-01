@@ -64,7 +64,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl mb-4 shadow-lg">
             <svg
               className="w-8 h-8 text-white"
               fill="currentColor"
@@ -227,19 +227,17 @@ export default function RegisterPage() {
                 <div className="w-full border-t border-gray-300 dark:border-slate-600"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400">
-                  ou
-                </span>
+                <span className="px-2 bg-white text-gray-700">ou</span>
               </div>
             </div>
 
             {/* Login Link */}
             <div className="text-center">
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-gray-700 text-sm">
                 Já tem uma conta?{" "}
                 <Link
                   href="/login"
-                  className="font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                  className="font-semibold text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
                 >
                   Faça login aqui
                 </Link>

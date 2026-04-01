@@ -202,7 +202,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">{user.name}</h2>
-                <p className="text-amber-50">
+                <p className="text-white">
                   {user.is_admin ? "👑 Administrador" : "👤 Cliente"}
                 </p>
               </div>
@@ -384,7 +384,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                 ⚠️ Deletar Conta
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-gray-700 mb-6">
                 Tem certeza que deseja deletar sua conta? Esta ação é
                 irreversível e todos os seus dados serão perdidos.
               </p>

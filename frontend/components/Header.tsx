@@ -27,7 +27,7 @@ export function Header() {
               <span className="text-base sm:text-lg">💄</span>
             </div>
             <h1 className="text-base sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
-              Nokia Center - Gerenciamento
+              Nokia Center
             </h1>
           </Link>
 

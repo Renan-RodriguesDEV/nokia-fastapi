@@ -116,7 +116,7 @@ export default function CartsPage() {
   if (isLoading || loadingData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-500"></div>
       </div>
     );
   }
@@ -148,12 +148,12 @@ export default function CartsPage() {
         {cartItems.length === 0 ? (
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-12 border border-gray-200 dark:border-slate-700 text-center">
             <div className="text-6xl mb-4">🛒</div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               {user?.is_admin
                 ? "Nenhum carrinho registrado"
                 : "Seu carrinho está vazio"}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-700">
               {user?.is_admin
                 ? "Nenhum cliente tem itens no carrinho."
                 : "Adicione produtos do catálogo para começar suas compras!"}
@@ -248,9 +248,7 @@ export default function CartsPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                   Total de Itens
                 </p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {totalItems}
-                </p>
+                <p className="text-3xl font-bold text-gray-900">{totalItems}</p>
               </div>
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
