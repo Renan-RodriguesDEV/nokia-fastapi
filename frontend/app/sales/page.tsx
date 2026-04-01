@@ -235,10 +235,10 @@ export default function SalesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      <header className="z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900">
             {user?.is_admin ? "💰 Histórico de Vendas" : "📋 Minhas Compras"}
           </h1>
           <Backbutton />
@@ -247,7 +247,7 @@ export default function SalesPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {error && (
-          <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 rounded-lg text-red-700 dark:text-red-200">
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 rounded-lg text-red-700">
             ⚠️ {error}
           </div>
         )}
@@ -260,7 +260,7 @@ export default function SalesPage() {
                 ? "Nenhuma venda registrada"
                 : "Você ainda não fez nenhuma compra"}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600">
               {user?.is_admin
                 ? "As vendas aparecerão aqui quando houver transações no sistema."
                 : "Comece a explorar nossos produtos e faça sua primeira compra!"}
@@ -435,10 +435,10 @@ export default function SalesPage() {
                 <div className="flex gap-4">
                   <div className="text-4xl">ℹ️</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-blue-200 mb-2">
                       Como funciona o pagamento
                     </h3>
-                    <p className="text-blue-800 dark:text-blue-300">
+                    <p className="text-gray-900 dark:text-blue-300">
                       1. Clique em <strong>&quot;Gerar Link&quot;</strong> para
                       criar um link de pagamento único
                       <br />

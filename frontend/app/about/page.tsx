@@ -155,7 +155,7 @@ export default function AboutPage() {
   if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -165,13 +165,11 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
       {/* Header */}
-      <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
+      <header className="z-40 bg-white border-b border-blue-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            👤 Meu Perfil
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900">👤 Meu Perfil</h1>
           <Backbutton />
         </div>
       </header>
@@ -180,7 +178,7 @@ export default function AboutPage() {
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Success Message */}
         {success && (
-          <div className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-700 rounded-lg text-green-700 dark:text-green-200 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-green-100 border border-green-400 rounded-lg text-green-700 flex items-center gap-2">
             <span>✅</span>
             {success}
           </div>
@@ -188,18 +186,18 @@ export default function AboutPage() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 rounded-lg text-red-700 dark:text-red-200 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 rounded-lg text-red-700 flex items-center gap-2">
             <span>⚠️</span>
             {error}
           </div>
         )}
 
         {/* Profile Card */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-lg border border-blue-200 overflow-hidden">
           {/* Profile Header */}
-          <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-8">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8">
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center text-4xl">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-4xl">
                 👤
               </div>
               <div>
@@ -219,28 +217,28 @@ export default function AboutPage() {
                 {/* Profile Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Nome Completo
                     </label>
-                    <p className="text-gray-900 dark:text-white bg-gray-50 dark:bg-slate-700 rounded-lg px-4 py-3">
+                    <p className="text-gray-900 bg-gray-50 rounded-lg px-4 py-3">
                       {user.name}
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Email (Usuário)
                     </label>
-                    <p className="text-gray-900 dark:text-white bg-gray-50 dark:bg-slate-700 rounded-lg px-4 py-3">
+                    <p className="text-gray-900 bg-gray-50 rounded-lg px-4 py-3">
                       {user.username}
                     </p>
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Telefone
                     </label>
-                    <p className="text-gray-900 dark:text-white bg-gray-50 dark:bg-slate-700 rounded-lg px-4 py-3">
+                    <p className="text-gray-900 bg-gray-50 rounded-lg px-4 py-3">
                       {user.telephone || "Não informado"}
                     </p>
                   </div>
@@ -250,14 +248,14 @@ export default function AboutPage() {
                 <div className="flex gap-3 pt-4">
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-lg transition"
+                    className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition"
                   >
                     ✏️ Editar Perfil
                   </button>
                   {user.is_admin ? (
                     <button
                       onClick={() => setShowDeleteConfirm(true)}
-                      className="flex-1 px-4 py-3 bg-red-100 hover:bg-red-200 dark:bg-red-900/20 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-semibold rounded-lg transition"
+                      className="flex-1 px-4 py-3 bg-red-100 hover:bg-red-200 text-red-600 font-semibold rounded-lg transition"
                     >
                       🗑️ Deletar Conta
                     </button>
@@ -276,13 +274,13 @@ export default function AboutPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Email (Usuário)
                   </label>
                   <input
@@ -290,13 +288,13 @@ export default function AboutPage() {
                     name="username"
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Telefone (opcional)
                   </label>
                   <input
@@ -304,18 +302,18 @@ export default function AboutPage() {
                     name="telephone"
                     value={formData.telephone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
-                <div className="border-t border-gray-200 dark:border-slate-700 pt-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <div className="border-t border-gray-200 pt-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Alterar Senha (opcional)
                   </h3>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Nova Senha
                       </label>
                       <input
@@ -324,12 +322,12 @@ export default function AboutPage() {
                         value={formData.newPassword}
                         onChange={handleInputChange}
                         placeholder="Deixe em branco para manter a senha atual"
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Confirmar Nova Senha
                       </label>
                       <input
@@ -338,7 +336,7 @@ export default function AboutPage() {
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
                         placeholder="Confirme a nova senha"
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>

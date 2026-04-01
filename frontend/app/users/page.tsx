@@ -83,7 +83,7 @@ export default function UsersPage() {
   }, [token, user, loadUsers]);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
@@ -168,7 +168,7 @@ export default function UsersPage() {
         const response = await usersApi.updateUser(
           editingUser.id,
           updateData,
-          token!
+          token!,
         );
 
         if (response.error) {
@@ -237,7 +237,7 @@ export default function UsersPage() {
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      u.username.toLowerCase().includes(searchTerm.toLowerCase())
+      u.username.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (authLoading) {
@@ -249,11 +249,11 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
       {/* Header */}
-      <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <header className="z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900">
             👥 Gerenciar Usuários
           </h1>
           <Backbutton />
@@ -264,14 +264,14 @@ export default function UsersPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Messages */}
         {success && (
-          <div className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-700 rounded-lg text-green-700 dark:text-green-200 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-green-100 border border-green-400 rounded-lg text-green-700 flex items-center gap-2">
             <span>✅</span>
             {success}
           </div>
         )}
 
         {error && (
-          <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 rounded-lg text-red-700 dark:text-red-200 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 rounded-lg text-red-700 flex items-center gap-2">
             <span>⚠️</span>
             {error}
           </div>
@@ -285,7 +285,7 @@ export default function UsersPage() {
               placeholder="Buscar por nome ou email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
@@ -307,7 +307,7 @@ export default function UsersPage() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Nenhum usuário encontrado
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-gray-600 mb-6">
               {searchTerm
                 ? "Tente ajustar seus critérios de busca"
                 : "Crie seu primeiro usuário clicando no botão abaixo"}
@@ -322,7 +322,7 @@ export default function UsersPage() {
             )}
           </div>
         ) : (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 dark:bg-slate-900">

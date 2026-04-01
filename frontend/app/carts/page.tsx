@@ -128,8 +128,8 @@ export default function CartsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      <header className="z-40 bg-white border-b border-blue-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {user?.is_admin ? "🛒 Carrinho de Clientes" : "🛒 Meu Carrinho"}

@@ -16,7 +16,7 @@ from routes.websocket import router as websocket_router
 
 load_dotenv()
 app = FastAPI(
-    title="Back-end Padaria da Vila!",
+    title="Back-end Nokia!",
     description="back-end para consumo em NextJS feito em FastAPI",
     version="0.0.1",
 )
@@ -47,7 +47,7 @@ app.include_router(payments_router)
 @app.get("/", status_code=status.HTTP_200_OK, tags=["health"])
 def get():
     return HTMLResponse("""
-    <p> Bem vindo a API da padaria da vila 
+    <p> Bem vindo a API da Nokia 
     <button onclick="window.location.href='/docs'">Swegger</button>
     <button onclick="window.location.href='/redoc'">Documentação</button>
     <p/>

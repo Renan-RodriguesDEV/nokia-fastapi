@@ -21,25 +21,25 @@ export default function Sidebar() {
       icon: "🏠",
       label: "Pagina Inicial",
       href: "/",
-      color: "hover:text-purple-500 dark:hover:text-purple-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "🛍️",
       label: "Meus Produtos",
       href: "/products",
-      color: "hover:text-blue-500 dark:hover:text-blue-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "🛒",
       label: "Meu Carrinho",
       href: "/carts",
-      color: "hover:text-green-500 dark:hover:text-green-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "📋",
       label: "Minhas Compras",
       href: "/sales",
-      color: "hover:text-purple-500 dark:hover:text-purple-400",
+      color: "hover:text-blue-600",
     },
   ];
 
@@ -49,31 +49,31 @@ export default function Sidebar() {
       icon: "🏠",
       label: "Pagina Inicial",
       href: "/",
-      color: "hover:text-purple-500 dark:hover:text-purple-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "📦",
       label: "Gerenciar Produtos",
       href: "/products",
-      color: "hover:text-blue-500 dark:hover:text-blue-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "👥",
       label: "Gerenciar Usuários",
       href: "/users",
-      color: "hover:text-red-500 dark:hover:text-red-400",
+      color: "hover:text-blue-600",
     },
     {
-      icon: "�",
+      icon: "💳",
       label: "Gerenciar Vendas",
       href: "/admin/sales",
-      color: "hover:text-orange-500 dark:hover:text-orange-400",
+      color: "hover:text-blue-600",
     },
     {
       icon: "📊",
       label: "Histórico de Vendas",
       href: "/sales",
-      color: "hover:text-green-500 dark:hover:text-green-400",
+      color: "hover:text-blue-600",
     },
   ];
 
@@ -83,7 +83,7 @@ export default function Sidebar() {
     <>
       {/* Sidebar - Hidden on mobile, visible on desktop */}
       <aside
-        className={`hidden sm:block sm:fixed left-0 top-0 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-lg transition-all duration-300 z-30 ${
+        className={`hidden sm:block sm:fixed left-0 top-0 h-screen bg-white border-r border-blue-200 shadow-lg transition-all duration-300 z-30 ${
           isOpen ? "w-64" : "w-20"
         }`}
         onMouseEnter={() => setIsOpen(true)}
@@ -91,17 +91,17 @@ export default function Sidebar() {
       >
         <div className="flex flex-col h-full p-4">
           {/* Logo/Brand */}
-          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200 dark:border-slate-700">
-            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex-shrink-0">
-              <span className="text-lg">🍞</span>
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-blue-200">
+            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex-shrink-0">
+              <span className="text-lg">💄</span>
             </div>
             {isOpen && (
               <div className="min-w-0">
-                <h1 className="text-sm font-bold text-gray-900 dark:text-white truncate">
-                  Padaria
+                <h1 className="text-sm font-bold text-gray-900 truncate">
+                  Nokia Center
                 </h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                  da Vila
+                <p className="text-xs text-gray-600 truncate">
+                  Centro de Cosméticos
                 </p>
               </div>
             )}
@@ -113,7 +113,7 @@ export default function Sidebar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300 ${link.color}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 ${link.color}`}
                 title={link.label}
               >
                 <span className="text-lg flex-shrink-0">{link.icon}</span>
@@ -125,17 +125,15 @@ export default function Sidebar() {
           </nav>
 
           {/* User Info & Actions */}
-          <div className="space-y-3 border-t border-gray-200 dark:border-slate-700 pt-4">
+          <div className="space-y-3 border-t border-blue-200 pt-4">
             {/* User Profile */}
             {isOpen && user && (
-              <div className="bg-gray-50 dark:bg-slate-800 rounded-lg p-3">
-                <p className="text-xs text-gray-600 dark:text-gray-400">
-                  Logado como
-                </p>
-                <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+              <div className="bg-blue-50 rounded-lg p-3">
+                <p className="text-xs text-gray-600">Logado como</p>
+                <p className="text-sm font-semibold text-gray-900 truncate">
                   {user.username}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-600">
                   {user.is_admin ? "👑 Administrador" : "👤 Cliente"}
                 </p>
               </div>
@@ -144,7 +142,7 @@ export default function Sidebar() {
             {/* Profile Link */}
             <Link
               href="/about"
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-700 hover:text-blue-600"
               title="Meu Perfil"
             >
               <span className="text-lg flex-shrink-0">👤</span>
@@ -156,7 +154,7 @@ export default function Sidebar() {
             {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 bg-blue-50 hover:bg-blue-100 text-blue-600"
               title="Sair"
             >
               <span className="text-lg">🚪</span>

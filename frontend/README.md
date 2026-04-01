@@ -1,6 +1,6 @@
-# 🎨 Frontend - Next.js Padaria
+# 💄 Frontend - Next.js Nokia Center
 
-Cliente web moderno built com Next.js, React e TypeScript. Interface responsiva com autenticação JWT, proteção de rotas e componentes reutilizáveis.
+Cliente web moderno built com Next.js, React e TypeScript. Interface responsiva com autenticação JWT, proteção de rotas e componentes reutilizáveis para loja de beleza e perfumaria.
 
 ## 📋 Visão Geral
 
@@ -98,7 +98,7 @@ frontend/
 NEXT_PUBLIC_API_URL=http://localhost:8000
 
 # Opcional (para futuros usos)
-NEXT_PUBLIC_APP_NAME=Padaria FastAPI
+NEXT_PUBLIC_APP_NAME=Nokia Center FastAPI
 NEXT_PUBLIC_APP_VERSION=0.0.1
 ```
 

@@ -344,7 +344,7 @@ export default function ProductsPage() {
   // Loading inicial
   if (authLoading || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
       </div>
     );
@@ -355,9 +355,9 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
       {/* Header */}
-      <header className="z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm">
+      <header className="z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="w-full px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-start gap-2 sm:gap-3 flex-nowrap">
             <Link
@@ -367,7 +367,7 @@ export default function ProductsPage() {
               <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex-shrink-0">
                 <span className="text-base sm:text-lg">🍞</span>
               </div>
-              <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white truncate">
+              <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 truncate">
                 Produtos
               </h1>
             </Link>
@@ -392,18 +392,14 @@ export default function ProductsPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Mensagens de feedback */}
         {error && (
-          <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <p className="text-sm font-medium text-red-800 dark:text-red-300">
-              ⚠️ {error}
-            </p>
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-sm font-medium text-red-800">⚠️ {error}</p>
           </div>
         )}
 
         {success && (
-          <div className="mb-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <p className="text-sm font-medium text-green-800 dark:text-green-300">
-              ✅ {success}
-            </p>
+          <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+            <p className="text-sm font-medium text-green-800">✅ {success}</p>
           </div>
         )}
 
@@ -421,7 +417,7 @@ export default function ProductsPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="all">Todas as categorias</option>
             {PRODUCT_CATEGORIES.map((cat) => (
@@ -435,7 +431,7 @@ export default function ProductsPage() {
         {/* Grid de produtos */}
         {filteredProducts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-500 dark:text-gray-400 text-lg">
+            <p className="text-gray-500 text-lg">
               {searchTerm || categoryFilter !== "all"
                 ? "Nenhum produto encontrado com os filtros aplicados."
                 : "Nenhum produto cadastrado ainda."}
@@ -454,10 +450,10 @@ export default function ProductsPage() {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-slate-700 overflow-hidden group"
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden group"
               >
                 {/* Imagem do produto */}
-                <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center overflow-hidden">
                   {productImages[product.id] ? (
                     <img
                       src={productImages[product.id]}
@@ -486,15 +482,15 @@ export default function ProductsPage() {
 
                 {/* Conteúdo */}
                 <div className="p-4">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 truncate">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">
                     {product.name}
                   </h3>
 
-                  <p className="text-2xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+                  <p className="text-2xl font-bold text-blue-600 mb-2">
                     {formatPrice(product.price)}
                   </p>
 
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                     <span>Estoque: {product.stock}</span>
                     <span>Val: {formatDate(product.validity)}</span>
                   </div>
@@ -505,19 +501,19 @@ export default function ProductsPage() {
                       <>
                         <button
                           onClick={() => openDetailsModal(product)}
-                          className="flex-1 px-3 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition text-sm font-medium"
+                          className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition text-sm font-medium"
                         >
                           Detalhes
                         </button>
                         <button
                           onClick={() => openEditModal(product)}
-                          className="flex-1 px-3 py-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-lg hover:bg-amber-200 dark:hover:bg-amber-900/50 transition text-sm font-medium"
+                          className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition text-sm font-medium"
                         >
                           Editar
                         </button>
                         <button
                           onClick={() => openDeleteModal(product)}
-                          className="px-3 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition text-sm font-medium"
+                          className="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition text-sm font-medium"
                         >
                           🗑️
                         </button>

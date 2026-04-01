@@ -60,7 +60,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -73,22 +73,18 @@ export default function RegisterPage() {
               <path d="M5 3a2 2 0 00-2 2v6h16V5a2 2 0 00-2-2H5zm16 8H2v5a2 2 0 002 2h12a2 2 0 002-2v-5z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Padaria da Vila
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Criar uma nova conta
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Nokia</h1>
+          <p className="text-gray-600">Criar uma nova conta</p>
         </div>
 
         {/* Card Register */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Input */}
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Nome Completo
               </label>
@@ -98,7 +94,7 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Seu nome completo"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -108,7 +104,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Email
               </label>
@@ -118,7 +114,7 @@ export default function RegisterPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="seu.email@exemplo.com"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -128,7 +124,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="telephone"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Telefone (Opcional)
               </label>
@@ -138,7 +134,7 @@ export default function RegisterPage() {
                 value={telephone}
                 onChange={(e) => setTelephone(e.target.value)}
                 placeholder="(11) 99999-9999"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
               />
             </div>
@@ -147,7 +143,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Senha
               </label>
@@ -157,7 +153,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Mínimo 6 caracteres"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -167,7 +163,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Confirme a Senha
               </label>
@@ -177,7 +173,7 @@ export default function RegisterPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Repita sua senha"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -185,10 +181,8 @@ export default function RegisterPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <p className="text-sm font-medium text-red-800 dark:text-red-300">
-                  ⚠️ {error}
-                </p>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-red-800">⚠️ {error}</p>
               </div>
             )}
 
@@ -196,7 +190,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105 disabled:scale-100"
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105 disabled:scale-100"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -257,7 +251,7 @@ export default function RegisterPage() {
         {/* Footer Info */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-500">
-            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos reservados.
+            © 2026 Nokia by @Renan Rodrigues. Todos os direitos reservados.
           </p>
         </div>
       </div>

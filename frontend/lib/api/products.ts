@@ -6,13 +6,13 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Categorias disponíveis para produtos (conforme backend)
 export const PRODUCT_CATEGORIES = [
-  'Pães',
-  'Confeitaria simples',
-  'Salgados',
-  'Frios e laticínios',
-  'Bebidas',
-  'Itens de conveniência básica',
-  'Produtos embalados essenciais',
+  'Maquiagem',
+  'Skincare',
+  'Perfumes',
+  'Hair Care',
+  'Cosméticos',
+  'Higiene Pessoal',
+  'Acessórios de Beleza',
 ] as const;
 
 export type ProductCategory = typeof PRODUCT_CATEGORIES[number];

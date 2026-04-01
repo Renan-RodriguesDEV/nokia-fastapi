@@ -1,6 +1,6 @@
-# 🍞 Padaria FastAPI - Sistema Completo de E-commerce
+# 💄 Nokia Center FastAPI - Sistema Completo de E-commerce
 
-Uma plataforma full-stack moderna para gerenciar uma padaria virtual, com frontend responsivo em Next.js, backend robusto em FastAPI, autenticação JWT segura e dashboard dinâmico para clientes e administradores.
+Uma plataforma full-stack moderna para gerenciar uma loja de cosméticos e perfumaria, com frontend responsivo em Next.js, backend robusto em FastAPI, autenticação JWT segura e dashboard dinâmico para clientes e administradores.
 
 ## 📋 Visão Geral
 

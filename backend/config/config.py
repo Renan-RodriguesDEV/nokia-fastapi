@@ -5,7 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 credentials = {
-    "url": os.getenv("DB_URL"),
+    "url": os.getenv("DB_URL")
+    if not os.getenv("DEBUG") == "TRUE"
+    else os.getenv("DB_URL_DEV"),
     "port": int(os.getenv("EMAIL_PORT", 587)),
     "host": os.getenv("EMAIL_HOST", "smtp.gmail.com"),
     "username": os.getenv("EMAIL_USERNAME"),

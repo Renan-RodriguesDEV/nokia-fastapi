@@ -28,7 +28,7 @@ export default function RootLayout({
   const isRegisterPage = pathname === "/register";
 
   return (
-    <html lang="pt-BR" className="dark" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -36,7 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 transition-colors`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white transition-colors`}
       >
         <NotificationProvider>
           {!isLoginPage && !isRegisterPage && <Header />}

@@ -20,14 +20,14 @@ class SenderMail:
         self.password = password
 
     def send(
-        self, to_addr: str, content: str, subject: str = "Padaria da vila informa!"
+        self, to_addr: str, content: str, subject: str = "Nokia informa!"
     ):
         """Envia um email atraves do protocolo SMTP com smtplib.
 
         Args:
             to_addr (str): endereço para qual iremos enviar o email.
             content (str): mensagem/texto do email.
-            subject (str, optional): Assunto do email. Defaults to "Padaria da vila informa!".
+            subject (str, optional): Assunto do email. Defaults to "Nokia informa!".
 
         Returns:
             bool: True se o email foi enviado corretamente e False caso contrario.

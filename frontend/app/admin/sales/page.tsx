@@ -324,34 +324,34 @@ export default function AdminSalesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 sm:p-6">
       <Backbutton />
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Gerenciar Vendas
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600">
           Adicione, edite e remova vendas de clientes
         </p>
       </div>
 
       {/* Mensagens de erro e sucesso */}
       {error && (
-        <div className="mb-4 p-4 bg-red-100 dark:bg-red-500/10 border border-red-300 dark:border-red-500/20 rounded-lg text-red-700 dark:text-red-400">
+        <div className="mb-4 p-4 bg-red-100 border border-red-300 rounded-lg text-red-700">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 p-4 bg-green-100 dark:bg-green-500/10 border border-green-300 dark:border-green-500/20 rounded-lg text-green-700 dark:text-green-400">
+        <div className="mb-4 p-4 bg-green-100 border border-green-300 rounded-lg text-green-700">
           {success}
         </div>
       )}
 
       {/* Filtros e botão de criar */}
-      <div className="bg-white dark:bg-slate-800/50 backdrop-blur border border-gray-200 dark:border-slate-700/50 rounded-xl p-4 sm:p-6 mb-6">
+      <div className="bg-white backdrop-blur border border-gray-200 rounded-xl p-4 sm:p-6 mb-6">
         {/* Busca */}
         <div className="mb-4">
           <input
@@ -359,7 +359,7 @@ export default function AdminSalesPage() {
             placeholder="Buscar por cliente ou produto..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700/50 border border-gray-300 dark:border-slate-600/50 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-amber-500/50"
+            className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500"
           />
         </div>
 

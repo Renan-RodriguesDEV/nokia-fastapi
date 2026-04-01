@@ -17,7 +17,7 @@ export default function LoginPage() {
   // Redirecionar se já está autenticado
   useEffect(() => {
     console.log(
-      `[LOGIN] authLoading: ${authLoading}, isAuthenticated: ${isAuthenticated}`
+      `[LOGIN] authLoading: ${authLoading}, isAuthenticated: ${isAuthenticated}`,
     );
 
     if (!authLoading && isAuthenticated) {
@@ -39,14 +39,14 @@ export default function LoginPage() {
     } catch (err: any) {
       console.error(`[LOGIN] Erro no login:`, err);
       setError(
-        err.message || "Falha ao fazer login. Verifique suas credenciais."
+        err.message || "Falha ao fazer login. Verifique suas credenciais.",
       );
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -59,22 +59,20 @@ export default function LoginPage() {
               <path d="M5 3a2 2 0 00-2 2v6h16V5a2 2 0 00-2-2H5zm16 8H2v5a2 2 0 002 2h12a2 2 0 002-2v-5z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Padaria da Vila
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Nokia</h1>
+          <p className="text-gray-600">
             Bem-vindo ao seu sistema de gerenciamento
           </p>
         </div>
 
         {/* Card Login */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username Input */}
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Usuário
               </label>
@@ -84,7 +82,7 @@ export default function LoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Digite seu usuário"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -95,7 +93,7 @@ export default function LoginPage() {
               <div className="flex items-center justify-between mb-2">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-gray-700 dark:text-gray-200"
+                  className="block text-sm font-semibold text-gray-700"
                 >
                   Senha
                 </label>
@@ -106,7 +104,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Digite sua senha"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 disabled={isLoading}
                 required
               />
@@ -116,7 +114,7 @@ export default function LoginPage() {
             <div className="text-right">
               <Link
                 href="/forgot-password"
-                className="text-sm text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 font-medium"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium"
               >
                 Esqueceu sua senha?
               </Link>
@@ -124,10 +122,8 @@ export default function LoginPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <p className="text-sm font-medium text-red-800 dark:text-red-300">
-                  ⚠️ {error}
-                </p>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-red-800">⚠️ {error}</p>
               </div>
             )}
 
@@ -169,22 +165,20 @@ export default function LoginPage() {
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300 dark:border-slate-600"></div>
+                <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400">
-                  ou
-                </span>
+                <span className="px-2 bg-white text-gray-500">ou</span>
               </div>
             </div>
 
             {/* Register Link */}
             <div className="text-center">
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-gray-600 text-sm">
                 Não tem uma conta?{" "}
                 <Link
                   href="/register"
-                  className="font-semibold text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                  className="font-semibold text-blue-600 hover:text-blue-700"
                 >
                   Crie uma aqui
                 </Link>
@@ -196,7 +190,7 @@ export default function LoginPage() {
         {/* Footer Info */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-500">
-            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos reservados.
+            © 2026 Nokia by @Renan Rodrigues. Todos os direitos reservados.
           </p>
         </div>
       </div>

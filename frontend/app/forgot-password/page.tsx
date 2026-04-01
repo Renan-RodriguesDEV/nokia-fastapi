@@ -100,11 +100,11 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl mb-4 shadow-lg">
             <svg
               className="w-8 h-8 text-white"
               fill="currentColor"
@@ -113,16 +113,12 @@ export default function ForgotPasswordPage() {
               <path d="M5 3a2 2 0 00-2 2v6h16V5a2 2 0 00-2-2H5zm16 8H2v5a2 2 0 002 2h12a2 2 0 002-2v-5z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Padaria da Vila
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Recuperar sua senha
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Nokia</h1>
+          <p className="text-gray-600">Recuperar sua senha</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
           {step === "request" ? (
             // Etapa 1: Solicitação de Reset
             <form onSubmit={handleRequestPasswordReset} className="space-y-5">
@@ -130,7 +126,7 @@ export default function ForgotPasswordPage() {
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2"
+                  className="block text-sm font-semibold text-gray-700 mb-2"
                 >
                   Email
                 </label>
@@ -140,7 +136,7 @@ export default function ForgotPasswordPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="seu.email@exemplo.com"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   disabled={isLoading}
                   required
                 />
@@ -371,8 +367,7 @@ export default function ForgotPasswordPage() {
         {/* Footer Info */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-500">
-            © 2026 Padaria da Vila by @Renan Rodrigues. Todos os direitos
-            reservados.
+            © 2026 Nokia by @Renan Rodrigues. Todos os direitos reservados.
           </p>
         </div>
       </div>
