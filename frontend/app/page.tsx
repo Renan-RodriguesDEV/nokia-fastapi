@@ -198,7 +198,7 @@ export default function HomePage() {
             🎯 Dicas para Aproveitar
           </h4>
           {user.is_admin ? (
-            <ul className="space-y-2 text-gray-900 dark:text-blue-300">
+            <ul className="space-y-2 text-gray-900 dark:text-blue-500">
               <li className="flex items-center gap-2">
                 <span className="text-lg">📦</span>
                 <span>
@@ -229,7 +229,7 @@ export default function HomePage() {
               </li>
             </ul>
           ) : (
-            <ul className="space-y-2 text-gray-900 dark:text-blue-300">
+            <ul className="space-y-2 text-gray-900 dark:text-blue-500">
               <li className="flex items-center gap-2">
                 <span className="text-lg">🛍️</span>
                 <span>

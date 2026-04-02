@@ -14,6 +14,7 @@ from schemas.user import (
     UserUpdatePartialSchema,
     UserUpdateSchema,
 )
+from services.email import SenderMail
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -44,10 +45,33 @@ async def get_all(
     "/create", response_model=UserCreateSchema, status_code=status.HTTP_201_CREATED
 )
 async def create(user: UserCreateSchema, session: Session = Depends(get_session)):
+    password_unhashed = user.password
     user.password = hashpasswd(user.password)
     user_db = User(**user.model_dump(exclude_unset=True))
     session.add(user_db)
     session.commit()
+    sender_email = SenderMail()
+    sender_email.send_async(
+        user.username,
+        f"""Olá {user.name},
+
+Seja bem-vindo ao Nokia Center!
+
+Seu cadastro foi realizado com sucesso e sua conta já está ativa.
+A partir de agora, você pode acessar a plataforma utilizando:
+
+• Usuário (e-mail): {user.username}
+• Senha: `{password_unhashed}`
+
+Para acessar, visite: https://nokia-center.com/login
+
+Caso não reconheça este cadastro ou tenha qualquer dúvida, entre em contato com nosso suporte.
+
+Atenciosamente,
+Equipe Nokia Center
+""",
+        "Bem-vindo ao Nokia Center",
+    )
     return user
 
 

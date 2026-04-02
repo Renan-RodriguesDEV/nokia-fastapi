@@ -365,7 +365,7 @@ export default function ProductsPage() {
               className="flex items-center gap-1 sm:gap-2 min-w-fit flex-shrink-0"
             >
               <div className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex-shrink-0">
-                <span className="text-base sm:text-lg">🍞</span>
+                <span className="text-base sm:text-lg">🦋</span>
               </div>
               <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 truncate">
                 Produtos

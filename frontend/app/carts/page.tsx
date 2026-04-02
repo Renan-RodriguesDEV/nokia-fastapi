@@ -146,7 +146,7 @@ export default function CartsPage() {
         )}
 
         {cartItems.length === 0 ? (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-12 border border-gray-200 dark:border-slate-700 text-center">
+          <div className="p-8 text-center text-gray-700">
             <div className="text-6xl mb-4">🛒</div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               {user?.is_admin

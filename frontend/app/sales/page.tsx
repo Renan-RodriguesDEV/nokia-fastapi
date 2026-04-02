@@ -253,7 +253,7 @@ export default function SalesPage() {
         )}
 
         {sales.length === 0 ? (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-12 border border-gray-200 dark:border-slate-700 text-center">
+          <div className="p-8 text-center text-gray-700">
             <div className="text-6xl mb-4">📊</div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               {user?.is_admin
@@ -438,7 +438,7 @@ export default function SalesPage() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-blue-200 mb-2">
                       Como funciona o pagamento
                     </h3>
-                    <p className="text-gray-900 dark:text-blue-300">
+                    <p className="text-gray-900 dark:text-blue-500">
                       1. Clique em <strong>&quot;Gerar Link&quot;</strong> para
                       criar um link de pagamento único
                       <br />

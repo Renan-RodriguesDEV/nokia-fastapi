@@ -1,4 +1,4 @@
-# 🍞 Backend - FastAPI Padaria
+# 🦋 Backend - FastAPI Padaria
 
 Servidor de API REST assíncrono built com FastAPI, SQLAlchemy e JWT. Fornece autenticação, gerencimento de produtos, carrinho, vendas e controle de acesso.
 

@@ -16,7 +16,16 @@ def forgot_password(session: Session, username: str):
         raise exception_user_not_found
     token = create_reset_token(user, session)
     sender_mail = SenderMail()
-    sender_mail.send(username, f"Seu reset token é {token}", "Recuperação de senha")
+    content = f"""Prezado usuário,
+
+Seu token de recuperação de senha é: `{token}`
+
+Este código é válido por 24 horas.
+
+Att,
+Equipe Nokia Center"""
+
+    sender_mail.send_async(username, content, "Recuperação de senha")
     return token
 
 

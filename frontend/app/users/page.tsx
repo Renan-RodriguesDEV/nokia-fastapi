@@ -302,7 +302,7 @@ export default function UsersPage() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
           </div>
         ) : filteredUsers.length === 0 ? (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-12 border border-gray-200 dark:border-slate-700 text-center">
+          <div className="p-8 text-center text-gray-700">
             <div className="text-6xl mb-4">👥</div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Nenhum usuário encontrado
@@ -322,7 +322,7 @@ export default function UsersPage() {
             )}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 dark:bg-slate-900">
@@ -365,7 +365,7 @@ export default function UsersPage() {
                             👑 Admin
                           </span>
                         ) : (
-                          <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-semibold">
+                          <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-500 rounded-full text-xs font-semibold">
                             👤 Cliente
                           </span>
                         )}
@@ -373,7 +373,7 @@ export default function UsersPage() {
                       <td className="px-6 py-4 text-sm space-x-2 flex">
                         <button
                           onClick={() => openEditModal(u)}
-                          className="px-3 py-2 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition font-medium"
+                          className="px-3 py-2 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-500 rounded-lg transition font-medium"
                         >
                           ✏️ Editar
                         </button>

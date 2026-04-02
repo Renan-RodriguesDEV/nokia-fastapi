@@ -11,13 +11,13 @@
 ### 2. **Componentes Principais**
 
 #### Header.tsx ✅
-- Logo: 🍞 → 💄 (Beleza)
+- Logo: 🦋 → 💄 (Beleza)
 - Nome: "Nokia - Gerenciamento" → "Beleza Store - Gerenciamento"
 - Cores: Amber/Orange → Azul
 - Hover states: Amber-600 → Blue-600
 
 #### Sidebar.tsx ✅
-- Logo: 🍞 → 💄
+- Logo: 🦋 → 💄
 - Branding: "Padaria da Vila" → "Beleza Store / Loja de Beleza"
 - Cores de gradiente: Amber → Azul
 - Tema: Light only (removed dark mode)
