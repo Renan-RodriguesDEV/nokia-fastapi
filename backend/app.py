@@ -3,7 +3,7 @@ import os
 import uvicorn
 from config.config import credentials
 from dotenv import load_dotenv
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from routes.auth import router as auth_router
@@ -15,6 +15,7 @@ from routes.users import router as users_router
 from routes.websocket import router as websocket_router
 
 load_dotenv()
+
 app = FastAPI(
     title="Back-end Nokia!",
     description="back-end para consumo em NextJS feito em FastAPI",
@@ -36,6 +37,16 @@ app.add_middleware(
     allow_headers=["*"],
     allow_methods=["*"],
 )
+
+
+@app.middleware("http")
+async def forward_proto_header(request: Request, call_next):
+    # Detecta o header enviado pelo Nginx e ajusta o escopo
+    requested_proto = request.headers.get("x-forwarded-proto")
+    if requested_proto:
+        request.scope["scheme"] = requested_proto
+    return await call_next(request)
+
 
 # incluindo rotas da aplicação
 app.include_router(auth_router)
