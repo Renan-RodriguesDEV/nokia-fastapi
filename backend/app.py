@@ -19,6 +19,9 @@ app = FastAPI(
     title="Back-end Nokia!",
     description="back-end para consumo em NextJS feito em FastAPI",
     version="0.0.1",
+    root_path="/api",  # Comunica ao FastAPI que está em /api
+    docs_url="/docs",  # Relativo ao root_path
+    openapi_url="/openapi.json",
 )
 # configuração de CORS
 app.add_middleware(

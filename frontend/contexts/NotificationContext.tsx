@@ -23,7 +23,7 @@ interface NotificationContextType {
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function NotificationProvider({
@@ -52,7 +52,7 @@ export function NotificationProvider({
     // Função para buscar produtos com validade próxima/vencida
     // Pode ser implementada uma chamada à API aqui
     console.log(
-      "[WebSocket] Verificando produtos com validade próxima/vencida..."
+      "[WebSocket] Verificando produtos com validade próxima/vencida...",
     );
     const response = await fetch(`${urlAPI}/ws/check/validity`);
     if (response.ok) {
@@ -65,10 +65,9 @@ export function NotificationProvider({
   };
   // Conecta ao WebSocket apenas uma vez, no mount do provider
   useEffect(() => {
-    const urlAPI =
-      process.env.NEXT_PUBLIC_API_URL?.replace("http", "ws") ||
-      "ws://localhost:8000";
-    const wsUrl = `${urlAPI}/ws/stock`;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const wsProtocol = baseUrl.startsWith("https") ? "wss" : "ws";
+    const wsUrl = baseUrl.replace(/^https?:/, wsProtocol + ":") + "/ws/stock";
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
@@ -122,7 +121,7 @@ export function NotificationProvider({
       } catch (error) {
         console.error(
           "[WebSocket] Erro ao verificar status dos produtos:",
-          error
+          error,
         );
       }
     };
@@ -138,7 +137,7 @@ export function NotificationProvider({
 
   const markAsRead = useCallback((id: string) => {
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
     );
   }, []);
 
@@ -166,7 +165,7 @@ export function useNotifications() {
   const context = useContext(NotificationContext);
   if (!context) {
     throw new Error(
-      "useNotifications deve ser usado dentro de NotificationProvider"
+      "useNotifications deve ser usado dentro de NotificationProvider",
     );
   }
   return context;
