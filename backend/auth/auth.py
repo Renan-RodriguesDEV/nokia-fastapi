@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import bcrypt
 import jwt
@@ -9,7 +10,8 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/token")
+tokenUrl = "/auth/token" if os.getenv("DEBUG") == "TRUE" else "/api/auth/token"
+oauth2_schema = OAuth2PasswordBearer(tokenUrl=tokenUrl)
 
 ALGORITHM = credentials.get("ALGORITHM")
 SECRET_KEY = credentials.get("SECRET_KEY")
