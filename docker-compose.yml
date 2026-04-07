@@ -53,6 +53,11 @@ services:
       networks:
         - app-network
       restart: unless-stopped
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
 
 # definindo a rede para os containers se comunicarem
 networks:
@@ -61,3 +66,4 @@ networks:
   
 volumes:
   postgres-data:
+    driver: local
