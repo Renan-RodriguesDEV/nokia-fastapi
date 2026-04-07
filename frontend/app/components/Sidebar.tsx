@@ -75,6 +75,12 @@ export default function Sidebar() {
       href: "/sales",
       color: "hover:text-blue-600",
     },
+    {
+      icon: "📈",
+      label: "Dashboard",
+      href: "/admin/dashboard",
+      color: "hover:text-amber-600",
+    },
   ];
 
   const links = user?.is_admin ? adminLinks : clientLinks;

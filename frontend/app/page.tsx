@@ -98,6 +98,13 @@ export default function HomePage() {
       href: "/admin/sales",
       color: "from-blue-600 to-blue-700",
     },
+    {
+      icon: "📊",
+      title: "Dashboard",
+      description: "Visualize análises e gráficos de vendas e receitas",
+      href: "/admin/dashboard",
+      color: "from-amber-500 to-amber-600",
+    },
   ];
 
   const features = user.is_admin ? adminFeatures : clientFeatures;
