@@ -14,9 +14,6 @@ services:
     # dizendo onde está o arquivo de variáveis de ambiente do backend para o container utilizar elas sem precisar colocar no Dockerfile (não copia pro container, apenas seta as variáveis de ambiente lá dentro)
     env_file:
       - ./backend/.env
-    environment:
-      - FRONTEND_URL=${FRONTEND_URL:-http://frontend:3000} # URL interna (rede do compose)
-      - BACKEND_URL=${BACKEND_URL:-http://backend:8000} # URL interna (rede do compose)
     networks:
         - app-network
     # se o container cair reinicia ele automaticamente
@@ -28,9 +25,6 @@ services:
       - "3000:3000"
     env_file:
       - ./frontend/.env.local
-    environment:
-      # URLs no Docker: use "backend:8000" entre containers, "localhost:8000" no navegador
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://backend:8000}
     depends_on:
       - backend # garantindo que o backend inicie antes do frontend
     networks:
