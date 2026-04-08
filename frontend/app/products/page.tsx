@@ -34,7 +34,7 @@ export default function ProductsPage() {
     name: "",
     price: 0,
     stock: 0,
-    category: "Pães",
+    category: "Maquiagem",
     validity: new Date().toISOString().slice(0, 16),
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -136,7 +136,7 @@ export default function ProductsPage() {
       name: "",
       price: 0,
       stock: 0,
-      category: "Pães",
+      category: "Maquiagem",
       validity: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         .toISOString()
         .slice(0, 16),
@@ -462,7 +462,7 @@ export default function ProductsPage() {
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-6xl opacity-50">🥖</span>
+                    <span className="text-6xl opacity-50">💄</span>
                   )}
 
                   {/* Badge de categoria */}
@@ -759,7 +759,7 @@ export default function ProductsPage() {
                   className="w-full h-full object-cover rounded-t-2xl"
                 />
               ) : (
-                <span className="text-8xl opacity-50">🥖</span>
+                <span className="text-8xl opacity-50">💄</span>
               )}
               <button
                 onClick={() => setShowDetailsModal(false)}
