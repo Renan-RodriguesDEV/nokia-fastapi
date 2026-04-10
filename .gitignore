@@ -6,3 +6,8 @@ node_modules/
 *.sqlite3
 *.pyc
 alembic.ini
+# development
+.python-version
+*.out
+pyproject.toml
+uv.lock
