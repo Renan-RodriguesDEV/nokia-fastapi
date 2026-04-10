@@ -49,7 +49,8 @@ class Product(Base):
     price = Column(Float, nullable=False, default=0.0)
     stock = Column(Integer, nullable=False, default=0)
     category_id = Column(
-        ForeignKey("categorias.id", ondelete="CASCADE"), nullable=False
+        ForeignKey("categorias.id", ondelete="CASCADE"),
+        nullable=True,
     )
     category = relationship("Category", back_populates="product")
     validity = Column(TIMESTAMP, nullable=False, server_default=func.now())
