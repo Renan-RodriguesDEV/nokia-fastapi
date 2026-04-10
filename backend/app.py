@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from routes.auth import router as auth_router
 from routes.cart import router as cart_router
+from routes.categories import router as categories_router
 from routes.payments import router as payments_router
 from routes.products import router as products_router
 from routes.sales import router as sales_router
@@ -20,7 +21,9 @@ app = FastAPI(
     title="Back-end Nokia!",
     description="back-end para consumo em NextJS feito em FastAPI",
     version="0.0.1",
-    root_path="/api",  # Comunica ao FastAPI que está em /api
+    root_path="/api"
+    if not os.getenv("DEBUG") == "TRUE"
+    else "",  # Comunica ao FastAPI que está em /api
     docs_url="/docs",  # Relativo ao root_path
     openapi_url="/openapi.json",
 )
@@ -56,6 +59,7 @@ app.include_router(sales_router)
 app.include_router(cart_router)
 app.include_router(websocket_router)
 app.include_router(payments_router)
+app.include_router(categories_router)
 
 
 @app.get("/", status_code=status.HTTP_200_OK, tags=["health"])

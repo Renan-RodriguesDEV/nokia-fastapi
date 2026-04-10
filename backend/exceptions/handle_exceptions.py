@@ -18,6 +18,9 @@ exception_cart_not_found = HTTPException(
 exception_sale_not_found = HTTPException(
     status.HTTP_404_NOT_FOUND, "Venda não encontrado"
 )
+exception_category_not_found = HTTPException(
+    status.HTTP_404_NOT_FOUND, "Categoria não encontrado"
+)
 exception_missing_content = HTTPException(
     status.HTTP_422_UNPROCESSABLE_ENTITY, "Faltou conteudo para sua requisição"
 )

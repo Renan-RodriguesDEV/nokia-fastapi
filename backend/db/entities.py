@@ -48,7 +48,10 @@ class Product(Base):
     name = Column(String, unique=True, nullable=False)
     price = Column(Float, nullable=False, default=0.0)
     stock = Column(Integer, nullable=False, default=0)
-    category = Column(String, nullable=False)
+    category_id = Column(
+        ForeignKey("categorias.id", ondelete="CASCADE"), nullable=False
+    )
+    category = relationship("Category", back_populates="product")
     validity = Column(TIMESTAMP, nullable=False, server_default=func.now())
     image = Column(LargeBinary, nullable=True)
     created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
@@ -57,13 +60,27 @@ class Product(Base):
         "ShoppingCart", back_populates="product", cascade="all, delete-orphan"
     )
 
-    def __init__(self, name, price, stock, category, validity, image=None):
+    def __init__(self, name, price, stock, category_id, validity, image=None):
         self.name = name
         self.price = price
         self.stock = stock
-        self.category = category
+        self.category_id = category_id
         self.validity = validity
         self.image = image
+
+
+class Category(Base):
+    __tablename__ = "categorias"
+
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    name = Column(String, unique=True, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
+    product = relationship(
+        "Product", back_populates="category", cascade="all, delete-orphan"
+    )
+
+    def __init__(self, name):
+        self.name = name
 
 
 class Sale(Base):

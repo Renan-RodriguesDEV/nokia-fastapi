@@ -1,17 +1,18 @@
 import datetime
-from typing import Literal, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
+from schemas.category import CategorySchema
 
-Category = Literal[
-    "Maquiagem",
-    "Skincare",
-    "Perfumes",
-    "Hair Care",
-    "Cosméticos",
-    "Higiene Pessoal",
-    "Acessórios de Beleza",
-]
+# Category = Literal[
+#     "Maquiagem",
+#     "Skincare",
+#     "Perfumes",
+#     "Hair Care",
+#     "Cosméticos",
+#     "Higiene Pessoal",
+#     "Acessórios de Beleza",
+# ]
 
 
 class ProductSimpleSchema(BaseModel):
@@ -19,7 +20,7 @@ class ProductSimpleSchema(BaseModel):
     name: str
     price: float
     stock: int
-    category: str
+    category: CategorySchema
     validity: datetime.datetime
 
 
@@ -29,7 +30,8 @@ class ProductPublicSchema(BaseModel):
     name: str
     price: float
     stock: int
-    category: str
+    category_id: int
+    category: CategorySchema
     validity: datetime.datetime
 
 
@@ -37,7 +39,7 @@ class ProductCreateSchema(BaseModel):
     name: str
     price: float
     stock: int
-    category: Category
+    category_id: int
     validity: datetime.datetime
 
 
@@ -45,7 +47,7 @@ class ProductUpdateSchema(BaseModel):
     name: str
     price: float
     stock: int
-    category: Category
+    category_id: int
     validity: datetime.datetime
 
 
@@ -53,5 +55,5 @@ class ProductUpdatePartialSchema(BaseModel):
     name: Optional[str] = None
     price: Optional[float] = None
     stock: Optional[int] = None
-    category: Optional[Category] = None
+    category_id: Optional[int] = None
     validity: Optional[datetime.datetime] = None

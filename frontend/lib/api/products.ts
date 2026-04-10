@@ -2,20 +2,9 @@
  * 🛒 PRODUTOS - API endpoints para gerenciamento de produtos
  */
 
+import { Category } from "./categories";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
-// Categorias disponíveis para produtos (conforme backend)
-export const PRODUCT_CATEGORIES = [
-  'Maquiagem',
-  'Skincare',
-  'Perfumes',
-  'Hair Care',
-  'Cosméticos',
-  'Higiene Pessoal',
-  'Acessórios de Beleza',
-] as const;
-
-export type ProductCategory = typeof PRODUCT_CATEGORIES[number];
 
 // Interface do produto conforme backend
 export interface Product {
@@ -23,7 +12,7 @@ export interface Product {
   name: string;
   price: number;
   stock: number;
-  category: ProductCategory;
+  category: Category;
   validity: string;
   image?: string | null;
 }
@@ -32,7 +21,7 @@ export interface ProductCreate {
   name: string;
   price: number;
   stock: number;
-  category: ProductCategory;
+  category_id: number;
   validity: string;
 }
 
