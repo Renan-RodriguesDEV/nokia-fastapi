@@ -13,7 +13,7 @@ router = APIRouter(prefix="/categories", tags=["categories"])
 
 
 @router.get("/all", response_model=list[CategorySchema], status_code=status.HTTP_200_OK)
-def get_all(
+async def get_all(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
@@ -23,7 +23,7 @@ def get_all(
 
 
 @router.get("/{id}", response_model=CategorySchema, status_code=status.HTTP_200_OK)
-def get(
+async def get(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -36,7 +36,7 @@ def get(
 @router.post(
     "/create", response_model=CategorySchema, status_code=status.HTTP_201_CREATED
 )
-def create(
+async def create(
     category: CategoryCreateSchema,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -51,12 +51,14 @@ def create(
 
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete(
+async def delete(
     id: int,
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
     if not current_user and not current_user.is_admin:
+        raise exception_access_dained
+    if id == 1:
         raise exception_access_dained
     category = session.query(Category).filter(Category.id == id).first()
     if not category:
