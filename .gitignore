@@ -11,3 +11,4 @@ alembic.ini
 *.out
 pyproject.toml
 uv.lock
+nokia_deploy*
